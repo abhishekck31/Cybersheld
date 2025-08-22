@@ -486,6 +486,15 @@ export default function LearnPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-50">
+      {/* Navigation to Home */}
+      <div className="container mx-auto max-w-6xl px-4 pt-6 flex justify-start">
+        <Link href="/">
+          <Button variant="outline" className="flex items-center gap-2">
+            <Home className="h-5 w-5" />
+            Home
+          </Button>
+        </Link>
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16 px-4">
         <div className="container mx-auto max-w-6xl text-center">
