@@ -42,8 +42,8 @@ export function Navigation() {
             <Shield className="h-8 w-8 text-cyan-300 drop-shadow-[0_0_8px_cyan]" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-2xl text-cyan-300 drop-shadow-[0_0_6px_cyan] tracking-wide">CyberShield</span>
-            <span className="text-sm text-fuchsia-400 font-medium tracking-wider">India</span>
+            <span className="font-bold text-2xl text-cyan-300 drop-shadow-[0_0_6px_cyan] tracking-wide leading-tight">CyberShield</span>
+            <span className="text-sm text-fuchsia-400 font-medium tracking-wider leading-tight">India</span>
           </div>
         </Link>
 
