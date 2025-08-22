@@ -168,12 +168,7 @@ const safetyTips = [
   },
   {
     title: "Share with Family",
-    description: "Teach family members to use these tools for their online safety",
-    icon: Shield,
-  },
-  {
-    title: "Stay Updated",
-    description: "Keep using these tools as new threats emerge daily",
+    description: "Educate your family and friends about online threats and share these tools with them.",
     icon: AlertTriangle,
   },
 ]

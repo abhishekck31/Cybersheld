@@ -21,6 +21,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react"
+import ProtectedRoute from "@/components/ProtectedRoute"
 
 interface StudyModule {
   id: string
@@ -160,8 +161,9 @@ export default function StudyModulesPage() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-background">
+  return ( 
+    <ProtectedRoute>
+      <div className="min-h-screen bg-background">
       <Navigation />
 
       <main className="container mx-auto px-4 py-12">
@@ -336,6 +338,7 @@ export default function StudyModulesPage() {
       </main>
 
       <FooterSection />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }
