@@ -160,30 +160,35 @@ export default function QuizPage() {
               <span className="text-sm font-semibold text-cyan-600">Interactive Quiz System</span>
             </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="gradient-text">Test Your Knowledge</span>
+          <h1
+            className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-200 text-transparent bg-clip-text drop-shadow-[0_0_18px_#00fff7]"
+            style={{
+              // textShadow:
+              //   ' #00fff7, 0 0 32px #00fff7, 0 0 2px #00fff7',
+              letterSpacing: '0.04em',
+            }}
+          >
+            Test Your Knowledge
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Take interactive quizzes to test your ability to spot scams and protect yourself from cyber threats
-          </p>
+          <p className="text-xl text-gray-100 max-w-2xl mx-auto leading-relaxed tracking-wide" style={{textShadow: '0 0 2px #00fff7'}}>Take interactive quizzes to test your ability to spot scams and protect yourself from cyber threats</p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mt-8">
-            <div className="card-modern p-4 text-center">
-              <div className="text-2xl font-bold text-cyan-600">{userStats.totalScore}</div>
-              <div className="text-sm text-gray-600">Total Score</div>
-            </div>
-            <div className="card-modern p-4 text-center">
-              <div className="text-2xl font-bold text-orange-600">{userStats.quizzesCompleted}</div>
-              <div className="text-sm text-gray-600">Completed</div>
-            </div>
-            <div className="card-modern p-4 text-center">
-              <div className="text-2xl font-bold text-purple-600">{userStats.averageScore}%</div>
-              <div className="text-sm text-gray-600">Avg Score</div>
-            </div>
-            <div className="card-modern p-4 text-center">
-              <div className="text-2xl font-bold text-green-600">#{userStats.rank}</div>
-              <div className="text-sm text-gray-600">Rank</div>
-            </div>
+              <div className="card-modern p-4 text-center">
+                <div className="text-2xl font-bold text-cyan-400">{userStats.totalScore}</div>
+                <div className="text-sm text-gray-300">Total Score</div>
+              </div>
+              <div className="card-modern p-4 text-center">
+                <div className="text-2xl font-bold text-orange-400">{userStats.quizzesCompleted}</div>
+                <div className="text-sm text-gray-300">Completed</div>
+              </div>
+              <div className="card-modern p-4 text-center">
+                <div className="text-2xl font-bold text-purple-400">{userStats.averageScore}%</div>
+                <div className="text-sm text-gray-300">Avg Score</div>
+              </div>
+              <div className="card-modern p-4 text-center">
+                <div className="text-2xl font-bold text-green-400">#{userStats.rank}</div>
+                <div className="text-sm text-gray-300">Rank</div>
+              </div>
           </div>
         </div>
 
@@ -197,7 +202,7 @@ export default function QuizPage() {
 
           <TabsContent value="quizzes">
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Available Quizzes</h2>
+              <h2 className="text-3xl font-bold text-cyan-300 mb-8 text-center" style={{ textShadow: '0 0 8px #00fff7, 0 0 16px #00fff7' }}>Available Quizzes</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {quizzes.map((quiz, index) => {
                   const Icon = quiz.icon
@@ -216,7 +221,7 @@ export default function QuizPage() {
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-2">
-                              <CardTitle className="text-xl font-bold">{quiz.title}</CardTitle>
+                              <CardTitle className="text-xl font-bold text-cyan-200" style={{ textShadow: '0 0 6px #00fff7' }}>{quiz.title}</CardTitle>
                               <Badge
                                 className={
                                   quiz.difficulty === "Beginner"
@@ -229,50 +234,50 @@ export default function QuizPage() {
                                 {quiz.difficulty}
                               </Badge>
                             </div>
-                            <CardDescription className="text-sm leading-relaxed">{quiz.description}</CardDescription>
+                            <CardDescription className="text-sm leading-relaxed text-gray-300">{quiz.description}</CardDescription>
                           </div>
                         </div>
                       </CardHeader>
                       <CardContent>
                         <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
                           <div className="flex items-center space-x-2">
-                            <Target className="h-4 w-4 text-gray-600" />
-                            <span>{quiz.questions} questions</span>
+                            <Target className="h-4 w-4 text-cyan-400" />
+                            <span className="text-gray-200">{quiz.questions} questions</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Clock className="h-4 w-4 text-gray-600" />
-                            <span>{quiz.timeEstimate}</span>
+                            <Clock className="h-4 w-4 text-cyan-400" />
+                            <span className="text-gray-200">{quiz.timeEstimate}</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Users className="h-4 w-4 text-gray-600" />
-                            <span>{quiz.attempts} attempts</span>
+                            <Users className="h-4 w-4 text-cyan-400" />
+                            <span className="text-gray-200">{quiz.attempts} attempts</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <TrendingUp className="h-4 w-4 text-gray-600" />
-                            <span>{quiz.averageScore}% avg</span>
+                            <TrendingUp className="h-4 w-4 text-cyan-400" />
+                            <span className="text-gray-200">{quiz.averageScore}% avg</span>
                           </div>
                         </div>
 
                         <div className="mb-4">
                           <div className="flex justify-between text-sm mb-2">
-                            <span className="text-gray-600">Completion Rate</span>
-                            <span className="font-semibold text-cyan-600">{quiz.completionRate}%</span>
+                            <span className="text-gray-300">Completion Rate</span>
+                            <span className="font-semibold text-cyan-400">{quiz.completionRate}%</span>
                           </div>
                           <Progress value={quiz.completionRate} className="h-2" />
                         </div>
 
                         <div className="mb-4">
                           <div className="flex items-center space-x-2">
-                            <Trophy className="h-4 w-4 text-yellow-600" />
-                            <span className="text-sm font-semibold text-gray-900">Earn Badge: {quiz.badge}</span>
+                            <Trophy className="h-4 w-4 text-yellow-400" />
+                            <span className="text-sm font-semibold text-cyan-200">Earn Badge: {quiz.badge}</span>
                           </div>
-                          <div className="text-xs text-gray-600 mt-1">
+                          <div className="text-xs text-gray-300 mt-1">
                             Passing Score: {quiz.passingScore}% • Max Score: {quiz.maxScore} points
                           </div>
                         </div>
 
                         <Link href={`/quiz/${quiz.id}`}>
-                          <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white group">
+                          <Button className="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold group shadow-lg shadow-cyan-500/30">
                             Start Quiz
                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -287,7 +292,7 @@ export default function QuizPage() {
 
           <TabsContent value="achievements">
             <section>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Achievements & Badges</h2>
+              <h2 className="text-3xl font-bold text-cyan-300 mb-8 text-center" style={{ textShadow: '0 0 8px #00fff7' }}>Achievements & Badges</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {achievements.map((achievement, index) => {
                   const Icon = achievement.icon
@@ -306,23 +311,23 @@ export default function QuizPage() {
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-2">
-                              <CardTitle className="text-lg font-bold">{achievement.name}</CardTitle>
+                              <CardTitle className="text-lg font-bold text-cyan-200" style={{ textShadow: '0 0 6px #00fff7' }}>{achievement.name}</CardTitle>
                               {achievement.unlocked && (
                                 <Badge className="bg-yellow-100 text-yellow-800">Unlocked</Badge>
                               )}
                             </div>
-                            <CardDescription className="text-sm leading-relaxed">
+                            <CardDescription className="text-sm leading-relaxed text-gray-300">
                               {achievement.description}
                             </CardDescription>
-                            <div className="text-xs text-gray-600 mt-2">+{achievement.points} points</div>
+                            <div className="text-xs text-gray-300 mt-2">+{achievement.points} points</div>
                           </div>
                         </div>
                       </CardHeader>
                       <CardContent>
                         <div className="mb-2">
                           <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-600">Progress</span>
-                            <span className="font-semibold text-cyan-600">{achievement.progress}%</span>
+                            <span className="text-gray-300">Progress</span>
+                            <span className="font-semibold text-cyan-400">{achievement.progress}%</span>
                           </div>
                           <Progress value={achievement.progress} className="h-2" />
                         </div>
@@ -336,12 +341,12 @@ export default function QuizPage() {
 
           <TabsContent value="leaderboard">
             <section>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Top Performers</h2>
+              <h2 className="text-3xl font-bold text-cyan-300 mb-8 text-center" style={{ textShadow: '0 0 8px #00fff7' }}>Top Performers</h2>
               <div className="max-w-2xl mx-auto">
                 <Card className="card-modern">
                   <CardHeader>
-                    <CardTitle className="text-center">Global Leaderboard</CardTitle>
-                    <CardDescription className="text-center">Top cyber security quiz champions</CardDescription>
+                    <CardTitle className="text-center text-cyan-200" style={{ textShadow: '0 0 6px #00fff7' }}>Global Leaderboard</CardTitle>
+                    <CardDescription className="text-center text-gray-300">Top cyber security quiz champions</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -359,12 +364,12 @@ export default function QuizPage() {
                             {user.avatar}
                           </div>
                           <div className="flex-1">
-                            <div className="font-semibold">{user.name}</div>
-                            <div className="text-sm text-gray-600">{user.badges} badges earned</div>
+                            <div className="font-semibold text-cyan-100">{user.name}</div>
+                            <div className="text-sm text-gray-300">{user.badges} badges earned</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-bold text-lg text-cyan-600">{user.score}</div>
-                            <div className="text-xs text-gray-600">points</div>
+                            <div className="font-bold text-lg text-cyan-400">{user.score}</div>
+                            <div className="text-xs text-gray-300">points</div>
                           </div>
                         </div>
                       ))}
@@ -377,7 +382,7 @@ export default function QuizPage() {
 
           <TabsContent value="progress">
             <section>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Your Learning Progress</h2>
+              <h2 className="text-3xl font-bold text-cyan-300 mb-8 text-center" style={{ textShadow: '0 0 8px #00fff7' }}>Your Learning Progress</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Card className="card-modern">
                   <CardHeader>
@@ -408,21 +413,21 @@ export default function QuizPage() {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="text-center mb-4">
-                        <div className="text-3xl font-bold text-cyan-600 mb-2">75%</div>
-                        <div className="text-sm text-gray-600">Overall Progress</div>
+                        <div className="text-3xl font-bold text-cyan-400 mb-2">75%</div>
+                        <div className="text-sm text-gray-300">Overall Progress</div>
                         <Progress value={75} className="mt-2" />
                       </div>
                       <div className="text-sm space-y-2">
                         <div className="flex justify-between">
-                          <span>Beginner Level</span>
-                          <span className="text-green-600 font-semibold">Complete</span>
+                          <span className="text-gray-200">Beginner Level</span>
+                          <span className="text-green-400 font-semibold">Complete</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Intermediate Level</span>
-                          <span className="text-yellow-600 font-semibold">In Progress</span>
+                          <span className="text-gray-200">Intermediate Level</span>
+                          <span className="text-yellow-400 font-semibold">In Progress</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Advanced Level</span>
+                          <span className="text-gray-400">Advanced Level</span>
                           <span className="text-gray-400">Locked</span>
                         </div>
                       </div>
@@ -437,8 +442,8 @@ export default function QuizPage() {
         <div className="mt-16 text-center">
           <Card className="glass-effect border-2 border-cyan-200 max-w-3xl mx-auto animate-fade-in">
             <CardContent className="pt-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Level Up?</h3>
-              <p className="text-gray-600 mb-6 text-lg">
+              <h3 className="text-2xl font-bold text-cyan-200 mb-4" style={{ textShadow: '0 0 6px #00fff7' }}>Ready to Level Up?</h3>
+              <p className="text-cyan-100 mb-6 text-lg" style={{ textShadow: '0 0 6px #00fff7' }}>
                 Based on your progress, we recommend starting with the Payment Security Quiz to earn your next badge!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
