@@ -34,6 +34,7 @@ import {
 import Link from "next/link"
 
 const learningModules = [
+  // ...existing modules...
   {
     id: "phishing-fundamentals",
     title: "Phishing Attack Fundamentals",
@@ -54,24 +55,26 @@ const learningModules = [
       realExamples: ["Fake bank notifications", "UPI scam messages", "Government impersonation emails"],
     },
   },
+  // ...existing modules...
+  // Place the Females card after Seniors
   {
-    id: "mobile-security",
-    title: "Mobile Device Security",
-    description: "Comprehensive guide to securing smartphones with focus on Indian mobile banking and UPI",
-    icon: Smartphone,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    lessons: 10,
-    students: 8900,
-    rating: 4.9,
-    progress: 25,
-    category: "Device Security",
-    color: "bg-green-600",
-    topics: ["App Permissions", "UPI Security", "Mobile Banking", "Privacy Settings"],
+    id: "female-cybersecurity",
+    title: "Females",
+    description: "Guides for women on online safety, privacy, harassment protection, and secure digital practices.",
+    icon: Home, // You can change this to a more suitable icon if desired
+    difficulty: "Beginner",
+    duration: "40 mins",
+    lessons: 7,
+    students: 12000,
+    rating: 4.8,
+    progress: 0,
+    category: "Women Safety",
+    color: "bg-pink-500",
+    topics: ["Online Harassment", "Privacy", "Safe Social Media", "Reporting Tools"],
     content: {
-      overview: "Secure your smartphone against the latest mobile threats in India",
-      objectives: ["Configure app permissions", "Secure UPI transactions", "Protect personal data"],
-      realExamples: ["Fake payment apps", "SMS OTP scams", "Malicious APK files"],
+      overview: "Empowering women to stay safe online and protect their digital presence.",
+      objectives: ["Recognize harassment", "Use privacy settings", "Report abuse", "Stay safe on social media"],
+      realExamples: ["Social media harassment", "Privacy breaches", "Reporting abuse"],
     },
   },
   {
@@ -485,7 +488,7 @@ export default function LearnPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-50">
+  <div className="min-h-screen bg-black text-gray-100">
       {/* Navigation to Home */}
       <div className="container mx-auto max-w-6xl px-4 pt-6 flex justify-start">
         <Link href="/">
@@ -566,8 +569,10 @@ export default function LearnPage() {
                 ))}
               </div>
 
+              {/* Choose Your Learning Path Heading */}
+              <h2 className="text-3xl font-bold text-center mb-8 text-cyan-400 tracking-tight">Choose Your Learning Path</h2>
               {/* Modules Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 justify-center items-stretch max-w-6xl">
                 {filteredModules.map((module, index) => {
                   const Icon = module.icon
                   const progressStatus = getProgressStatus(module.progress)
@@ -575,28 +580,26 @@ export default function LearnPage() {
                   return (
                     <Card
                       key={module.id}
-                      className="bg-gray-800/50 border border-gray-700/50 rounded-xl shadow-xl hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-300 hover:scale-105 group backdrop-blur-sm card-glow animate-fade-in"
+                      className="bg-[#18181b] border border-cyan-400/20 rounded-2xl shadow-2xl hover:shadow-cyan-400/10 transition-all duration-300 hover:scale-105 group animate-fade-in flex flex-col justify-between min-h-[340px] mx-auto w-full max-w-[340px]"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between mb-3">
-                          <div className={`p-3 rounded-lg ${module.color}/20 border border-gray-600/30`}>
-                            <Icon className={`h-6 w-6 text-blue-400`} />
+                          <div className={`p-3 rounded-xl ${module.color}/20 border border-gray-700/40`}>
+                            <Icon className={`h-7 w-7 text-cyan-400`} />
                           </div>
-                          <Badge className={`${getDifficultyColor(module.difficulty)} border-0`}>
-                            {module.difficulty}
-                          </Badge>
+                          <Badge className={`${getDifficultyColor(module.difficulty)} border-0 text-xs px-2 py-1 rounded-full`}>{module.difficulty}</Badge>
                         </div>
-                        <CardTitle className="text-xl font-semibold group-hover:text-blue-400 transition-colors text-gray-100">
+                        <CardTitle className="text-lg font-bold group-hover:text-cyan-400 transition-colors text-gray-100">
                           {module.title}
                         </CardTitle>
-                        <CardDescription className="text-gray-400">{module.description}</CardDescription>
+                        <CardDescription className="text-gray-400 text-sm">{module.description}</CardDescription>
                       </CardHeader>
 
-                      <CardContent className="space-y-4">
+                      <CardContent className="space-y-4 flex flex-col flex-1 justify-end">
                         {/* Progress Bar */}
                         <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between text-xs">
                             <span className={progressStatus.color}>{progressStatus.status}</span>
                             <span className="text-gray-500">{module.progress}%</span>
                           </div>
@@ -604,8 +607,8 @@ export default function LearnPage() {
                         </div>
 
                         {/* Module Stats */}
-                        <div className="flex items-center justify-between text-sm text-gray-500">
-                          <div className="flex items-center space-x-4">
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <div className="flex items-center space-x-3">
                             <div className="flex items-center space-x-1">
                               <Clock className="h-4 w-4" />
                               <span>{module.duration}</span>

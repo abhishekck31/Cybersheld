@@ -188,7 +188,7 @@ export default function SecurityToolsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-50">
+  <div className="min-h-screen bg-black text-gray-100">
       <Navigation />
 
       <main className="container mx-auto max-w-7xl px-4 py-8">
@@ -217,7 +217,7 @@ export default function SecurityToolsPage() {
               return (
                 <Card
                   key={tool.id}
-                  className="bg-gray-800/50 border border-gray-700/50 hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-300 hover:scale-105 group backdrop-blur-sm card-glow animate-fade-in hover-lift"
+                  className="bg-gray-800/50 border border-gray-700/50 hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-300 hover:scale-105 group backdrop-blur-sm card-glow animate-fade-in hover-lift flex flex-col h-full"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardHeader className="text-center">
@@ -238,7 +238,7 @@ export default function SecurityToolsPage() {
                       {tool.description}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex-1 flex flex-col justify-start">
                     <div className="mb-4">
                       <h4 className="font-medium text-sm text-gray-200 mb-3">Features:</h4>
                       <ul className="space-y-2">
@@ -253,13 +253,15 @@ export default function SecurityToolsPage() {
                     <div className="mb-6">
                       <p className="text-xs text-gray-500 italic">{tool.usage}</p>
                     </div>
-                    <Link href={`/tools/${tool.id}`}>
+                  </CardContent>
+                  <CardFooter className="mt-auto">
+                    <Link href={`/tools/${tool.id}`} className="w-full">
                       <Button className="w-full group btn-primary">
                         Use Tool
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </Link>
-                  </CardContent>
+                  </CardFooter>
                 </Card>
               )
             })}

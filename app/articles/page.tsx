@@ -196,7 +196,7 @@ export default function ArticlesPage() {
       case "Advanced":
         return "bg-red-100 text-red-800"
       default:
-        return "bg-gray-100 text-gray-800"
+  return "bg-[#18181b] text-gray-100"
     }
   }
 

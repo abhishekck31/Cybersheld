@@ -5,13 +5,13 @@ import ProtectedRoute from "@/components/ProtectedRoute"
 export default function ProfilePage() {
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-900 py-12">
+  <div className="min-h-screen bg-black py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">User Profile</h1>
             <p className="text-gray-400">Manage your account settings and preferences</p>
           </div>
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className="bg-[#18181b] rounded-lg p-6">
             <UserProfile
               appearance={{
                 baseTheme: dark,

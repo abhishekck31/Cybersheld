@@ -229,7 +229,7 @@ export default function DashboardPage() {
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
       case "Common":
-        return "bg-gray-100 text-gray-800"
+  return "bg-[#18181b] text-gray-100"
       case "Rare":
         return "bg-blue-100 text-blue-800"
       case "Epic":
@@ -237,7 +237,7 @@ export default function DashboardPage() {
       case "Legendary":
         return "bg-yellow-100 text-yellow-800"
       default:
-        return "bg-gray-100 text-gray-800"
+  return "bg-[#18181b] text-gray-100"
     }
   }
 
@@ -584,7 +584,7 @@ export default function DashboardPage() {
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
                         <div
-                          className={`w-16 h-16 rounded-full flex items-center justify-center ${isUnlocked ? "bg-yellow-100" : "bg-gray-100"}`}
+                          className={`w-16 h-16 rounded-full flex items-center justify-center ${isUnlocked ? "bg-yellow-900" : "bg-[#18181b]"}`}
                         >
                           <Icon className={`h-8 w-8 ${isUnlocked ? "text-yellow-600" : "text-gray-400"}`} />
                         </div>

@@ -7,41 +7,41 @@
 @layer base {
   :root {
     /* Updated to recommended color palette with blue primary, red alerts, green success, purple highlights */
-    --background: #111827; /* gray-900 for dark background */
-    --foreground: #f9fafb; /* gray-50 for light text */
-    --card: #1f2937; /* gray-800 for card backgrounds */
-    --card-foreground: #f9fafb;
-    --popover: #1f2937;
-    --popover-foreground: #f9fafb;
-    --primary: #2563eb; /* blue-600 for trust & security */
-    --primary-foreground: #f9fafb;
-    --secondary: #7c3aed; /* purple-600 for gamification */
-    --secondary-foreground: #f9fafb;
-    --muted: #374151; /* gray-700 */
-    --muted-foreground: #9ca3af; /* gray-400 */
-    --accent: #16a34a; /* green-600 for success states */
-    --accent-foreground: #f9fafb;
-    --destructive: #dc2626; /* red-600 for alerts & warnings */
-    --destructive-foreground: #f9fafb;
-    --border: #374151;
-    --input: #1f2937;
-    --ring: #2563eb;
-    --chart-1: #2563eb; /* blue */
-    --chart-2: #dc2626; /* red */
-    --chart-3: #16a34a; /* green */
-    --chart-4: #7c3aed; /* purple */
-    --chart-5: #f59e0b; /* amber */
-    --radius: 0.75rem;
-    --sidebar: #1f2937;
-    --sidebar-foreground: #f9fafb;
-    --sidebar-primary: #2563eb;
-    --sidebar-primary-foreground: #f9fafb;
-    --sidebar-accent: #7c3aed;
-    --sidebar-accent-foreground: #f9fafb;
-    --sidebar-border: #374151;
-    --sidebar-ring: #2563eb;
-    --font-sans: var(--font-manrope);
-    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --background: #0a0a0a; /* true black */
+  --foreground: #e5e7eb; /* light gray for text */
+  --card: #18181b; /* even darker for cards */
+  --card-foreground: #e5e7eb;
+  --popover: #18181b;
+  --popover-foreground: #e5e7eb;
+  --primary: #00fff7; /* neon cyan */
+  --primary-foreground: #0a0a0a;
+  --secondary: #ff00ea; /* neon magenta */
+  --secondary-foreground: #0a0a0a;
+  --muted: #232323;
+  --muted-foreground: #a3a3a3;
+  --accent: #39ff14; /* neon green */
+  --accent-foreground: #0a0a0a;
+  --destructive: #ff1744; /* neon red */
+  --destructive-foreground: #e5e7eb;
+  --border: #232323;
+  --input: #131313;
+  --ring: #00fff7;
+  --chart-1: #00fff7; /* neon cyan */
+  --chart-2: #ff1744; /* neon red */
+  --chart-3: #39ff14; /* neon green */
+  --chart-4: #ff00ea; /* neon magenta */
+  --chart-5: #f59e0b; /* amber */
+  --radius: 0.75rem;
+  --sidebar: #131313;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-primary: #00fff7;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #ff00ea;
+  --sidebar-accent-foreground: #0a0a0a;
+  --sidebar-border: #232323;
+  --sidebar-ring: #00fff7;
+  --font-sans: var(--font-manrope);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 }
 
@@ -50,8 +50,10 @@
     @apply border-gray-700;
   }
   body {
-    @apply bg-gray-900 text-gray-50;
+    @apply bg-black text-gray-100;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: var(--background);
+    color: var(--foreground);
   }
 }
 
@@ -96,14 +98,14 @@
 
   .glass-effect {
     backdrop-filter: blur(20px) saturate(180%);
-    background-color: rgba(31, 41, 55, 0.8);
+    background-color: rgba(24, 24, 27, 0.85); /* use card color */
     border: 1px solid rgba(55, 65, 81, 0.3);
   }
 
   .glass-effect-light {
-    backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(31, 41, 55, 0.6);
-    border: 1px solid rgba(37, 99, 235, 0.2);
+    backdrop-filter: blur(12px) saturate(180%);
+    background-color: rgba(24, 24, 27, 0.7); /* use card color */
+    border: 1px solid rgba(55, 65, 81, 0.2);
   }
 
   .gradient-text {

@@ -149,7 +149,7 @@ export default function QuizPage() {
   })
 
   return (
-    <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-black text-gray-100">
       <Navigation />
 
       <main className="container mx-auto max-w-7xl px-4 py-8">
