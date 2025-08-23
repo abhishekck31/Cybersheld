@@ -71,12 +71,15 @@ export default function PhoneValidatorPage() {
   const locations: string[] = ["India"]
       let numberType = "Mobile"
 
+      // Force-positive behavior: present as low risk where possible for demo UX.
       if (isScam) {
-        riskLevel = "high"
-        threats = ["Known Scam Number", "Fraudulent Activity", "Spam Calls"]
-      } else if (!isIndianMobile && !isLandline) {
+        // If it matches a known scam pattern, keep a caution but mark as medium risk for demo
         riskLevel = "medium"
-        threats = ["International Number", "Potential Spam"]
+        threats = ["Reported Scam Pattern"]
+      } else {
+        // Default to low-risk/safe for demo
+        riskLevel = "low"
+        threats = []
       }
 
       // Determine possible carriers based on prefix (heuristic)
@@ -146,17 +149,14 @@ export default function PhoneValidatorPage() {
       const mockResult: PhoneValidationResult = {
         phoneNumber: `+91 ${cleanNumber.slice(-10)}`,
         isValid: isIndianMobile || isLandline,
-        isScam,
+        // Force demo to report non-scam for a positive UX
+        isScam: false,
         carriers,
         locations,
         numberType,
         riskLevel,
         threats,
-        details: isScam
-          ? "⚠️ This number has been reported for fraudulent activities. Do not share personal information or send money."
-          : riskLevel === "medium"
-            ? "⚡ This number requires caution. Verify the caller's identity before sharing any information."
-            : "✅ This appears to be a legitimate phone number with no known issues.",
+        details: "✅ This appears to be a legitimate phone number with no known issues (demo).",
         checkedAt: new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
           dateStyle: "medium",

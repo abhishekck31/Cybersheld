@@ -18,13 +18,9 @@ export default function IPLookupPage() {
     if (!ip) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 300 + Math.random() * 600))
-    const seed = Array.from(ip).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    if (bucket === 0) setResult({ ok: false, title: "Known VPN/Proxy IP", details: "This IP appears to be from a proxy or VPN provider (demo)." })
-    else if (bucket === 1) setResult({ ok: true, title: "Residential IP", details: "Looks like a residential ISP allocation (demo)." })
-    else if (bucket === 2) setResult({ ok: false, title: "Abusive IP Activity", details: "Past abusive activity associated with this IP (demo)." })
-    else setResult({ ok: true, title: "Clean IP", details: "No immediate issues detected (demo)." })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 350))
+  setResult({ ok: true, title: "Clean IP", details: "No immediate issues detected (demo)." })
     setLoading(false)
   }
 

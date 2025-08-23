@@ -18,13 +18,9 @@ export default function SSLCheckerPage() {
     if (!url) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 300 + Math.random() * 600))
-    const seed = Array.from(url).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    if (bucket === 0) setResult({ ok: false, title: "Expired Certificate", details: "The site's certificate is expired (demo)." })
-    else if (bucket === 1) setResult({ ok: true, title: "Valid Certificate", details: "Certificate is valid and issued by a trusted CA (demo)." })
-    else if (bucket === 2) setResult({ ok: false, title: "Self-signed Certificate", details: "Site uses a self-signed certificate (demo)." })
-    else setResult({ ok: true, title: "Good Security Grade", details: "Certificate chain looks healthy and modern ciphers are used (demo)." })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 350))
+  setResult({ ok: true, title: "Valid Certificate", details: "Certificate is valid and issued by a trusted CA (demo)." })
     setLoading(false)
   }
 

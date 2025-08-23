@@ -18,13 +18,9 @@ export default function WifiAnalyzerPage() {
     if (!ssid) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 300 + Math.random() * 500))
-    const seed = Array.from(ssid).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    if (bucket === 0) setResult({ ok: false, title: "Weak Encryption Detected", details: "Network uses WEP or open configuration (demo)." })
-    else if (bucket === 1) setResult({ ok: true, title: "WPA2/WPA3", details: "Strong encryption detected (demo)." })
-    else if (bucket === 2) setResult({ ok: false, title: "Default Credentials Likely", details: "Router appears to use default settings; change password (demo)." })
-    else setResult({ ok: true, title: "Secure Network", details: "No obvious vulnerabilities detected (demo)." })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 350))
+  setResult({ ok: true, title: "Secure Network", details: "No obvious vulnerabilities detected (demo)." })
     setLoading(false)
   }
 

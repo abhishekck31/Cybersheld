@@ -59,39 +59,14 @@ export function ThreatFeed() {
   }, []);
 
 
-  // Filter news from the past 24 hours, fallback to 3 most recent if none
-  const now = new Date();
-  const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  let recentNews = news.filter(item => {
-    if (!item.pubDate) return false;
-    const pub = new Date(item.pubDate);
-    return pub > twentyFourHoursAgo && pub <= now;
-  });
-  if (recentNews.length === 0 && news.length > 0) {
-    // Sort all news by pubDate descending and take top 3
-    recentNews = [...news]
-      .filter(item => item.pubDate)
-      .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
-      .slice(0, 3);
-  }
+  // Keep only valid (non-empty) news items, sort newest first, and limit to 3 latest items
+  const validNews = news
+    .filter((item) => item && item.title && item.title.toString().trim() !== "" && item.description && item.description.toString().trim() !== "" && item.pubDate)
+    .slice();
 
-  // Limit to 10 latest items for the live feed
-  recentNews = recentNews.slice(0, 10);
-
-  // Ensure we always render 10 items: use real recentNews and fill with generated placeholders if needed
-  const displayedNews = (() => {
-    const arr = [...recentNews];
-    const generatePlaceholder = (n: number) => ({
-      title: `Live security update ${n}`,
-      description: `Recent reports about cyber threats and scams. Stay alert and verify before taking action.`,
-      link: 'https://www.ndtv.com/livetv-ndtv24x7',
-      pubDate: new Date().toISOString(),
-    });
-    for (let i = arr.length; i < 10; i++) {
-      arr.push(generatePlaceholder(i + 1));
-    }
-    return arr;
-  })();
+  const recentNews = validNews
+    .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+    .slice(0, 3);
 
   const normalizeLink = (link: string | undefined) => {
   if (!link) return "https://www.ndtv.com/livetv-ndtv24x7";
@@ -119,7 +94,7 @@ export function ThreatFeed() {
   {error && news.length === 0 && <div className="text-red-500 mb-4">{error}</div>}
       <div className="flex flex-col gap-4">
   {recentNews.length === 0 && !loading && <div className="col-span-full text-center text-gray-400">No cyber security news found.</div>}
-        {displayedNews.map((item, idx) => {
+  {recentNews.map((item: any, idx: number) => {
           const cue = getVisualCue(item.title + " " + (item.description || ""));
           const tip = tips[idx % tips.length];
           const safeLink = normalizeLink(item.link);

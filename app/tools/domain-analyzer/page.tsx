@@ -18,13 +18,9 @@ export default function DomainAnalyzerPage() {
     if (!domain) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 300 + Math.random() * 600))
-    const seed = Array.from(domain).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    if (bucket === 0) setResult({ ok: false, title: "Newly Registered Domain", details: "Domain created recently — caution advised (demo)." })
-    else if (bucket === 1) setResult({ ok: true, title: "Established Domain", details: "Domain has a long registration history (demo)." })
-    else if (bucket === 2) setResult({ ok: false, title: "Typosquatting Candidate", details: "Looks similar to a popular domain; possible impersonation (demo)." })
-    else setResult({ ok: true, title: "Clean Domain", details: "No immediate issues detected in registration metadata (demo)." })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 350))
+  setResult({ ok: true, title: "Established Domain", details: "Domain has a long registration history (demo)." })
     setLoading(false)
   }
 

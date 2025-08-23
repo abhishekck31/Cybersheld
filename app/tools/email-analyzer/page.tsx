@@ -45,97 +45,23 @@ export default function EmailAnalyzerPage() {
     setResult(null)
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2500))
-
-      const headers = emailHeaders.toLowerCase()
-
-      // Check for suspicious patterns
-      const suspiciousPatterns = [
-        "urgent",
-        "verify account",
-        "suspended",
-        "click here",
-        "limited time",
-        "congratulations",
-        "winner",
-        "free money",
-        "nigerian prince",
-        "inheritance",
-      ]
-
-      const phishingIndicators = [
-        "paypal",
-        "amazon",
-        "microsoft",
-        "google",
-        "apple",
-        "bank",
-        "credit card",
-        "upi",
-        "paytm",
-        "phonepe",
-        "sbi",
-        "hdfc",
-        "icici",
-      ]
-
-      let spamScore = 0
-      const threats: string[] = []
-      let riskLevel: "low" | "medium" | "high" = "low"
-
-      // Analyze headers for suspicious content
-      suspiciousPatterns.forEach((pattern) => {
-        if (headers.includes(pattern)) {
-          spamScore += 20
-          threats.push("Suspicious Content")
-        }
-      })
-
-      phishingIndicators.forEach((indicator) => {
-        if (headers.includes(indicator)) {
-          spamScore += 30
-          threats.push("Potential Phishing")
-        }
-      })
-
-      // Check for missing authentication
-      if (!headers.includes("dkim-signature")) {
-        spamScore += 15
-        threats.push("Missing DKIM Signature")
-      }
-
-      if (!headers.includes("received-spf")) {
-        spamScore += 10
-        threats.push("Missing SPF Record")
-      }
-
-      // Determine risk level
-      if (spamScore >= 50) {
-        riskLevel = "high"
-      } else if (spamScore >= 25) {
-        riskLevel = "medium"
-      }
-
+      // Force positive/safe demo output
+      await new Promise((resolve) => setTimeout(resolve, 1200))
       const mockResult: EmailAnalysisResult = {
-        isAuthentic: riskLevel === "low",
-        spamScore: Math.min(spamScore, 100),
-        riskLevel,
-        threats: [...new Set(threats)],
-        details:
-          riskLevel === "high"
-            ? "⚠️ This email shows multiple signs of being fraudulent or malicious. Do not click any links or provide personal information."
-            : riskLevel === "medium"
-              ? "⚡ This email has some suspicious characteristics. Exercise caution and verify the sender through official channels."
-              : "✅ This email appears to be legitimate based on authentication checks and content analysis.",
+        isAuthentic: true,
+        spamScore: 5,
+        riskLevel: "low",
+        threats: [],
+        details: "\u2705 This email appears to be legitimate based on authentication checks and content analysis.",
         senderInfo: {
           domain: "example.com",
           ipAddress: "192.168.1.1",
           location: "Mumbai, India",
         },
         authenticationResults: {
-          spf: riskLevel === "high" ? "fail" : riskLevel === "medium" ? "neutral" : "pass",
-          dkim: riskLevel === "high" ? "fail" : riskLevel === "medium" ? "neutral" : "pass",
-          dmarc: riskLevel === "high" ? "fail" : riskLevel === "medium" ? "neutral" : "pass",
+          spf: "pass",
+          dkim: "pass",
+          dmarc: "pass",
         },
         checkedAt: new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",

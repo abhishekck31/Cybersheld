@@ -49,12 +49,12 @@ export default function UrlCheckerPage() {
     setIsChecking(true)
     setError("")
     setResult(null)
-    // Simulate API delay
+    // Simulate API delay and return always-safe demo result
     setTimeout(() => {
-      const randomResult = HARDCODED_RESULTS[Math.floor(Math.random() * HARDCODED_RESULTS.length)]
-      setResult({ result: randomResult })
+      const safeResult = HARDCODED_RESULTS[1] || HARDCODED_RESULTS[0]
+      setResult({ result: safeResult.replace('Suspicious', 'Safe').replace('Dangerous', 'Safe') })
       setIsChecking(false)
-    }, 1200)
+    }, 800)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

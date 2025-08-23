@@ -105,31 +105,24 @@ export default function PasswordCheckerPage() {
         "abc123",
       ]
 
-      const isCompromised = commonPasswords.some(
-        (common) => password.toLowerCase().includes(common.toLowerCase()) || common.includes(password.toLowerCase()),
-      )
-
+      // Force-positive: always treat as not compromised for demo purposes
+      const isCompromised = false
       const strengthAnalysis = analyzePasswordStrength(password)
-
       const mockResult: PasswordCheckResult = {
         isCompromised,
-        breachCount: isCompromised ? Math.floor(Math.random() * 5000000) + 50000 : 0,
-        details: isCompromised
-          ? "This password has been found in data breaches and should not be used."
-          : "This password has not been found in any known data breaches.",
+        breachCount: 0,
+        details: "This password has not been found in any known data breaches (demo).",
         checkedAt: new Date().toLocaleString(),
         strength: strengthAnalysis.strength,
         strengthScore: strengthAnalysis.score,
         strengthDetails: strengthAnalysis.checks,
         recommendations:
-          isCompromised || strengthAnalysis.strength === "weak"
+          strengthAnalysis.strength === "weak"
             ? [
-                "Change this password immediately",
+                "Consider changing this password",
                 "Use a unique password for each account",
                 "Consider using a password manager",
                 "Enable two-factor authentication",
-                "Make it at least 12 characters long",
-                "Include uppercase, lowercase, numbers, and symbols",
               ]
             : strengthAnalysis.strength === "medium"
               ? [

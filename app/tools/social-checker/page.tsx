@@ -18,16 +18,9 @@ export default function SocialCheckerPage() {
     if (!input) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 500 + Math.random() * 700))
-    const seed = Array.from(input).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 3
-    if (bucket === 0) {
-      setResult({ ok: false, title: "Likely Fake Profile", details: "Low activity, few friends, and copied avatar detected (demo)." })
-    } else if (bucket === 1) {
-      setResult({ ok: true, title: "Probably Genuine", details: "Profile shows consistent posts and real interactions (demo)." })
-    } else {
-      setResult({ ok: false, title: "Suspicious Profile", details: "Multiple accounts with similar names found; verify manually (demo)." })
-    }
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 400))
+  setResult({ ok: true, title: "Probably Genuine", details: "Profile shows consistent posts and real interactions (demo)." })
     setLoading(false)
   }
 

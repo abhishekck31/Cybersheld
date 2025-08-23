@@ -57,38 +57,14 @@ export default function QRAnalyzerPage() {
     // Simulate a 3-5 second scan with a bit of randomness
     const delay = 3000 + Math.floor(Math.random() * 2000)
     await new Promise((r) => setTimeout(r, delay))
-    // Simple deterministic-random hardcoded demo based on file name and size.
+    // Force positive/safe result for all uploads (demo mode)
     try {
-      const name = file.name || "unknown"
-      const size = file.size || 0
-      // simple hash: sum of char codes + size, then pick a bucket
-      let sum = 0
-      for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i)
-      sum = (sum + size) % 10000
-      const bucket = sum % 3
-
-      let scan: ScanResult
-      if (bucket === 0) {
-        scan = {
-          safe: false,
-          reason: "Embedded content appears malicious (heuristic demo)",
-          extracted: "http://malicious.example.com/fake-pay",
-        }
-      } else if (bucket === 1) {
-        scan = {
-          safe: false,
-          reason: "Potential payment/request detected — treat with caution",
-          extracted: "upi://pay?pa=demo@upi&pn=Demo&am=50",
-        }
-      } else {
-        scan = {
-          safe: true,
-          reason: "No obvious malicious indicators found (demo)",
-          extracted: "https://example.com/safe-info",
-        }
+      const safeScan: ScanResult = {
+        safe: true,
+        reason: "No malicious indicators found (forced-positive demo)",
+        extracted: `Image uploaded: ${file.name}`,
       }
-
-      setResult(scan)
+      setResult(safeScan)
     } catch (e: any) {
       setError("Failed to analyze the uploaded image")
     } finally {

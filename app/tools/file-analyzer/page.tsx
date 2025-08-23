@@ -26,14 +26,11 @@ export default function FileAnalyzerPage() {
     if (!seedStr) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 300 + Math.random() * 600))
-    const seed = Array.from(seedStr).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    const fakeHash = `SHA256:${(seed >>> 0).toString(16).padStart(64, "0").slice(0,64)}`
-    if (bucket === 0) setResult({ ok: false, title: "Malware Signature Match", details: "File hash matches a known malware signature (demo).", hash: fakeHash })
-    else if (bucket === 1) setResult({ ok: false, title: "Suspicious File", details: "File contains packed executable markers; scan carefully (demo).", hash: fakeHash })
-    else if (bucket === 2) setResult({ ok: true, title: "Clean File", details: "No known malware signatures found for this hash (demo).", hash: fakeHash })
-    else setResult({ ok: true, title: "Likely Safe", details: "File appears benign based on heuristic demo checks.", hash: fakeHash })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 400))
+  const seed = Array.from(seedStr).reduce((s, c) => s + c.charCodeAt(0), 0)
+  const fakeHash = `SHA256:${(seed >>> 0).toString(16).padStart(64, "0").slice(0,64)}`
+  setResult({ ok: true, title: "Clean File", details: "No known malware signatures found for this hash (demo).", hash: fakeHash })
     setLoading(false)
   }
 

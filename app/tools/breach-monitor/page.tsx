@@ -18,13 +18,9 @@ export default function BreachMonitorPage() {
     if (!email) return
     setLoading(true)
     setResult(null)
-    await new Promise((r) => setTimeout(r, 400 + Math.random() * 800))
-    const seed = Array.from(email).reduce((s, c) => s + c.charCodeAt(0), 0)
-    const bucket = seed % 4
-    if (bucket === 0) setResult({ ok: false, title: "Data Breach Found", details: "Your email appears in a 2022 credential leak (demo)." })
-    else if (bucket === 1) setResult({ ok: true, title: "No Breaches Found", details: "No known breaches found for this email (demo)." })
-    else if (bucket === 2) setResult({ ok: false, title: "Password Reuse Risk", details: "Multiple services show the same password hash (demo). Change passwords.", })
-    else setResult({ ok: true, title: "Monitored", details: "No immediate issues; we'll notify you if a new breach appears (demo)." })
+  // Force positive/safe demo output
+  await new Promise((r) => setTimeout(r, 450))
+  setResult({ ok: true, title: "No Breaches Found", details: "No known breaches found for this email (demo)." })
     setLoading(false)
   }
 
