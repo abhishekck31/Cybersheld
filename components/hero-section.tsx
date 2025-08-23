@@ -55,7 +55,7 @@ export function HeroSection() {
               <div className="flex items-center justify-center mb-4 h-14 w-14 rounded-xl bg-gradient-to-br from-purple-600/20 to-purple-700/20 border border-purple-400/20">
                 <Globe className="h-8 w-8 text-purple-400" />
               </div>
-              <div className="text-3xl font-extrabold text-white mb-2">12+</div>
+              <div className="text-3xl font-extrabold text-white mb-2">5+</div>
               <div className="text-sm font-semibold text-gray-200 mb-2">Languages</div>
               <p className="text-gray-400 text-sm leading-snug px-3">Available in Hindi and regional languages for maximum accessibility across India</p>
             </div>
