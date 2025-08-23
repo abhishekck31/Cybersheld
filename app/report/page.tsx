@@ -125,30 +125,35 @@ export default function ReportPage() {
         {/* Emergency Contacts */}
         <section className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">Emergency Helplines</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {emergencyContacts.map((contact) => {
               const Icon = contact.icon
               return (
-                <Card key={contact.number} className="hover:shadow-lg transition-shadow duration-300 relative">
+                <Card key={contact.number} className="flex flex-col justify-between h-full hover:shadow-lg transition-shadow duration-300 relative p-0">
                   {contact.urgent && (
-                    <Badge className="absolute -top-2 -right-2 bg-destructive text-white">Urgent</Badge>
+                    <Badge className="absolute top-4 right-4 bg-destructive text-white">Urgent</Badge>
                   )}
-                  <CardHeader className="text-center">
-                    <div
-                      className={`w-16 h-16 ${contact.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
-                    >
-                      <Icon className={`h-8 w-8 ${contact.color}`} />
-                    </div>
-                    <CardTitle className="text-xl font-semibold">{contact.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center">
-                    <div className="text-3xl font-bold text-destructive mb-2">{contact.number}</div>
-                    <CardDescription className="text-sm leading-relaxed mb-4">{contact.description}</CardDescription>
-                    <Button className="w-full" onClick={() => (window.location.href = `tel:${contact.number}`)}>
-                      <Phone className="mr-2 h-4 w-4" />
-                      Call Now
-                    </Button>
-                  </CardContent>
+                  <div className="flex flex-col flex-1">
+                    <CardHeader className="text-center flex flex-col items-center pt-8 pb-4">
+                      <div
+                        className={`w-16 h-16 ${contact.bgColor} rounded-full flex items-center justify-center mb-4`}
+                      >
+                        <Icon className={`h-8 w-8 ${contact.color}`} />
+                      </div>
+                      <CardTitle className="text-xl font-semibold mb-2">{contact.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col items-center flex-1 text-center pb-8 w-full">
+                      <div className="text-3xl font-bold text-destructive mb-2">{contact.number}</div>
+                      <CardDescription className="text-sm leading-relaxed mb-6">{contact.description}</CardDescription>
+                      <div className="flex-grow" />
+                      <div className="w-full flex items-end justify-center mt-auto">
+                        <Button className="w-full max-w-xs mx-auto" onClick={() => (window.location.href = `tel:${contact.number}`)}>
+                          <Phone className="mr-2 h-4 w-4" />
+                          Call Now
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </div>
                 </Card>
               )
             })}
@@ -162,7 +167,7 @@ export default function ReportPage() {
             {reportingChannels.map((channel, index) => {
               const Icon = channel.icon
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                <Card key={index} className="hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                   <CardHeader>
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -180,10 +185,10 @@ export default function ReportPage() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="mb-4">
+                  <CardContent className="flex flex-col flex-1 justify-between min-h-[260px]">
+                    <div>
                       <h4 className="font-medium text-sm text-foreground mb-3">Features:</h4>
-                      <ul className="space-y-2">
+                      <ul className="space-y-2 mb-6">
                         {channel.features.map((feature, featureIndex) => (
                           <li key={featureIndex} className="flex items-start space-x-2 text-sm text-muted-foreground">
                             <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0 mt-2" />
@@ -192,21 +197,23 @@ export default function ReportPage() {
                         ))}
                       </ul>
                     </div>
-                    {channel.url ? (
-                      <Button className="w-full group" asChild>
-                        <a href={`https://${channel.url}`} target="_blank" rel="noopener noreferrer">
-                          Visit Portal
-                          <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
-                    ) : (
-                      <Link href="/report/guide">
-                        <Button variant="outline" className="w-full bg-transparent group">
-                          Get Guidance
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-end w-full mt-auto">
+                      {channel.url ? (
+                        <Button className="w-full group" asChild>
+                          <a href={`https://${channel.url}`} target="_blank" rel="noopener noreferrer">
+                            Visit Portal
+                            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </a>
                         </Button>
-                      </Link>
-                    )}
+                      ) : (
+                        <Link href="/report/guide">
+                          <Button variant="outline" className="w-full bg-transparent group">
+                            Get Guidance
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               )

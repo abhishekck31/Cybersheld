@@ -75,8 +75,8 @@ export default function DemographicCards() {
             <CardContent className="flex-1" />
             <CardFooter className="mt-auto px-6 pb-6">
               <Link href={"/learn?demo=" + demo.id} className="w-full block">
-                <Button className="w-full border-2 border-blue-500 text-blue-400 bg-transparent hover:bg-blue-900/20 hover:text-blue-300 transition-colors">
-                  Access Tool
+                  <Button className="w-full border-2 border-blue-500 text-blue-400 bg-transparent hover:bg-blue-900/20 hover:text-blue-300 transition-colors">
+                    Start Learning
                 </Button>
               </Link>
             </CardFooter>

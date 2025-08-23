@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section"
 import DemographicCards from "@/components/demographic-cards"
 import { QuickActions } from "@/components/quick-actions"
 import { StatsSection } from "@/components/stats-section"
+import { ThreatFeed } from "@/components/threat-feed"
 import { FooterSection } from "@/components/footer-section"
 import ProtectedRoute from "@/components/ProtectedRoute"
 
@@ -25,6 +26,7 @@ export default function HomePage() {
             </div>
           </section>
           <QuickActions />
+          <ThreatFeed />
           <StatsSection />
         </main>
         <FooterSection />

@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { ThreatFeed } from "@/components/threat-feed"
 import { Newspaper, Calendar, ExternalLink, AlertTriangle, TrendingUp, Shield, Lightbulb, Clock } from "lucide-react"
 
 const newsArticles = [
@@ -122,6 +123,23 @@ export default function NewsPage() {
       <Navigation />
 
       <main className="container mx-auto max-w-6xl px-4 py-8">
+
+        {/* Live Threat Intelligence Feed (Real-time) - moved to top */}
+        <section className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent drop-shadow-md tracking-tight">
+              Live Threat Intelligence Feed
+            </h2>
+            <span className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full bg-gradient-to-r from-blue-700 to-cyan-500 text-white shadow-md border border-blue-400 animate-pulse">
+              <svg className="inline-block mr-1 h-3 w-3 animate-pulse" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+              Real-time
+            </span>
+          </div>
+          <div className="rounded-xl bg-black/70 border border-primary/20 p-4">
+            <ThreatFeed />
+          </div>
+        </section>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
@@ -220,52 +238,7 @@ export default function NewsPage() {
           </section>
         )}
 
-        {/* Regular News */}
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-6">Latest Updates</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredNews
-              .filter((article) => !article.isBreaking)
-              .map((article) => (
-                <Card key={article.id} className="hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      <Badge variant="outline" className="text-xs">
-                        {article.category}
-                      </Badge>
-                      <Badge
-                        variant="outline"
-                        className={`text-xs ${severityColors[article.severity as keyof typeof severityColors]}`}
-                      >
-                        {article.severity}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-lg font-semibold leading-tight">{article.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm leading-relaxed mb-4">{article.summary}</CardDescription>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <div className="flex items-center space-x-3">
-                        <div className="flex items-center space-x-1">
-                          <Calendar className="h-3 w-3" />
-                          <span>{new Date(article.date).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-3 w-3" />
-                          <span>{article.readTime}</span>
-                        </div>
-                      </div>
-                      <Button size="sm" variant="ghost" className="h-auto p-0 text-primary hover:text-primary/80">
-                        Read More
-                        <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </div>
-                    <div className="mt-2 text-xs text-muted-foreground">Source: {article.source}</div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </section>
+
 
         {/* Government Alerts Section */}
         <section className="mt-12">

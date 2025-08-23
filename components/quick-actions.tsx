@@ -94,11 +94,15 @@ export function QuickActions() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {quickActions.map((action, index) => {
-            const Icon = action.icon
+            const Icon = action.icon;
+            let buttonText = "Access Tool";
+            if (action.title === "Scam Quiz") buttonText = "Take Quiz";
+            if (action.title === "Report Scam") buttonText = "Report Now";
+            if (action.title === "Latest News") buttonText = "Explore Now";
             return (
               <Card
                 key={action.title}
-                className="card-modern hover-lift text-center card-glow animate-fade-in"
+                className="card-modern hover-lift text-center card-glow animate-fade-in flex flex-col h-full"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardHeader className="pb-4">
@@ -109,15 +113,19 @@ export function QuickActions() {
                   </div>
                   <CardTitle className="text-base sm:text-lg font-semibold text-gray-200">{action.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0">
-                  <CardDescription className="mb-3 sm:mb-4 text-xs sm:text-sm text-gray-400">
-                    {action.description}
-                  </CardDescription>
-                  <Link href={action.href}>
-                    <Button className="w-full btn-outline text-xs sm:text-sm py-2 hover:scale-105 transition-all duration-300">
-                      Access Tool
-                    </Button>
-                  </Link>
+                <CardContent className="pt-0 flex flex-col flex-1 justify-between min-h-[140px]">
+                  <div>
+                    <CardDescription className="mb-1 sm:mb-2 text-xs sm:text-sm text-gray-400">
+                      {action.description}
+                    </CardDescription>
+                  </div>
+                  <div className="flex items-end w-full mt-auto">
+                    <Link href={action.href} className="w-full">
+                      <Button className="w-full btn-outline text-xs sm:text-sm py-2 hover:scale-105 transition-all duration-300">
+                        {buttonText}
+                      </Button>
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             )
