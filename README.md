@@ -1,4 +1,4 @@
-﻿# CyberShiel
+﻿# CyberShield
 
 A compact, demo-focused security tools web app built with Next.js (app router), TypeScript and Tailwind CSS. The project provides a collection of small security utilities (URL checker, QR analyzer, phone validator, password checker, etc.). Many tools in this repo are implemented as offline/demo flows that return deterministic or pseudo-random hardcoded results so the UX remains stable without external APIs.
 
@@ -119,4 +119,5 @@ Tip: if you want deterministic test cases, choose or share specific input string
   - Document any required provider keys and rate limits in this README.
 
 ---
+
 
