@@ -6,8 +6,9 @@ type NewsArticle = {
 };
 
 export async function fetchCyberNews(): Promise<NewsArticle[]> {
+  // Only show news related to online fraud, UPI scam, hacking, mobile/data security
   const keywords = [
-    "cyber", "scam", "fraud", "phishing", "ransomware", "malware", "data breach", "hacked", "security", "otp", "upi", "identity theft", "bank fraud"
+    "online fraud", "upi scam", "upi fraud", "hacking", "hacked", "mobile security", "data security", "data breach", "phishing", "malware", "bank fraud", "account hacked", "cyber attack", "cybercrime", "cyber crime"
   ];
 
   // NewsData.io

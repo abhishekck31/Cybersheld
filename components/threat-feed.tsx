@@ -55,14 +55,22 @@ export function ThreatFeed() {
     };
   }, []);
 
-  // Filter news from the past 24 hours
+
+  // Filter news from the past 24 hours, fallback to 3 most recent if none
   const now = new Date();
   const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  const recentNews = news.filter(item => {
+  let recentNews = news.filter(item => {
     if (!item.pubDate) return false;
     const pub = new Date(item.pubDate);
     return pub > twentyFourHoursAgo && pub <= now;
   });
+  if (recentNews.length === 0 && news.length > 0) {
+    // Sort all news by pubDate descending and take top 3
+    recentNews = [...news]
+      .filter(item => item.pubDate)
+      .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+      .slice(0, 3);
+  }
 
   return (
     <div>
@@ -77,7 +85,7 @@ export function ThreatFeed() {
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  {recentNews.length === 0 && !loading && <div className="col-span-full text-center text-gray-400">No cyber security news from the past 24 hours.</div>}
+  {recentNews.length === 0 && !loading && <div className="col-span-full text-center text-gray-400">No cyber security news found.</div>}
         {recentNews.map((item, idx) => {
           const cue = getVisualCue(item.title + " " + (item.description || ""));
           const tip = tips[idx % tips.length];
