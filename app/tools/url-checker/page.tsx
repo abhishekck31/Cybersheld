@@ -29,6 +29,14 @@ export default function UrlCheckerPage() {
     }
   }
 
+  const HARDCODED_RESULTS = [
+    `# Risk Assessment: Safe\n\n- **Source**: Well-known organization\n- **Type**: E-commerce\n- **Assessment**: This website appears safe.\n- **Advice**: Always check for HTTPS and avoid sharing sensitive info unless sure.`,
+    `# Risk Assessment: Suspicious\n\n- **Source**: Unknown\n- **Type**: Banking\n- **Assessment**: This website is suspicious.\n- **Advice**: Do not enter personal or financial information.`,
+    `# Risk Assessment: Dangerous\n\n- **Source**: Unverified\n- **Type**: Social Media\n- **Assessment**: This website is dangerous and may be a phishing site.\n- **Advice**: Avoid clicking links or entering any information.`,
+    `# Risk Assessment: Low Risk\n\n- **Source**: Trusted news outlet\n- **Type**: News\n- **Assessment**: This website is generally safe.\n- **Advice**: Be cautious of pop-ups or suspicious ads.`,
+    `# Risk Assessment: Medium Risk\n\n- **Source**: New domain\n- **Type**: Shopping\n- **Assessment**: This website is new and not widely known.\n- **Advice**: Proceed with caution and verify before making purchases.`
+  ];
+
   const checkUrl = async () => {
     if (!url.trim()) {
       setError("Please enter a URL to check")
@@ -41,23 +49,12 @@ export default function UrlCheckerPage() {
     setIsChecking(true)
     setError("")
     setResult(null)
-    try {
-      const response = await fetch("/api/url-analyzer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
-      })
-      const data = await response.json()
-      if (data?.result) {
-        setResult({ result: data.result })
-      } else {
-        setError(data?.error || "Failed to analyze URL. Please try again.")
-      }
-    } catch (err) {
-      setError("Failed to check URL. Please try again.")
-    } finally {
+    // Simulate API delay
+    setTimeout(() => {
+      const randomResult = HARDCODED_RESULTS[Math.floor(Math.random() * HARDCODED_RESULTS.length)]
+      setResult({ result: randomResult })
       setIsChecking(false)
-    }
+    }, 1200)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

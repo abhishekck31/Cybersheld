@@ -124,7 +124,21 @@ export default function NewsPage() {
 
       <main className="container mx-auto max-w-6xl px-4 py-8">
 
-        {/* Live Threat Intelligence Feed (Real-time) - moved to top */}
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <div className="flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-full">
+              <Newspaper className="h-5 w-5 text-primary" />
+              <span className="text-sm font-medium text-primary">Latest News & Alerts</span>
+            </div>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Cyber Security News</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Stay updated with the latest cyber security threats, government alerts, and safety tips
+          </p>
+        </div>
+
+        {/* Live Threat Intelligence Feed (Real-time) */}
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent drop-shadow-md tracking-tight">
@@ -140,151 +154,7 @@ export default function NewsPage() {
           </div>
         </section>
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <div className="flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-full">
-              <Newspaper className="h-5 w-5 text-primary" />
-              <span className="text-sm font-medium text-primary">Latest News & Alerts</span>
-            </div>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Cyber Security News</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stay updated with the latest cyber security threats, government alerts, and safety tips
-          </p>
-        </div>
-
-        {/* Daily Safety Tip */}
-        <Card className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold flex items-center">
-              <Lightbulb className="mr-3 h-6 w-6 text-primary" />
-              Daily Security Tip
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-foreground font-medium text-lg leading-relaxed">{currentTip}</p>
-          </CardContent>
-        </Card>
-
-        {/* Category Filter */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory !== category ? "bg-transparent" : ""}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Breaking News */}
-        {filteredNews.some((article) => article.isBreaking) && (
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center">
-              <TrendingUp className="mr-2 h-6 w-6 text-destructive" />
-              Breaking News
-            </h2>
-            <div className="space-y-4">
-              {filteredNews
-                .filter((article) => article.isBreaking)
-                .map((article) => (
-                  <Card key={article.id} className="border-l-4 border-l-destructive bg-destructive/5">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <Badge className="bg-destructive text-white">BREAKING</Badge>
-                            <Badge
-                              variant="outline"
-                              className={severityColors[article.severity as keyof typeof severityColors]}
-                            >
-                              {article.severity} Risk
-                            </Badge>
-                          </div>
-                          <CardTitle className="text-xl font-semibold mb-2">{article.title}</CardTitle>
-                          <CardDescription className="text-sm leading-relaxed">{article.summary}</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{new Date(article.date).toLocaleDateString()}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{article.readTime}</span>
-                          </div>
-                          <span>Source: {article.source}</span>
-                        </div>
-                        <Button size="sm" variant="outline" className="bg-transparent">
-                          Read More
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-            </div>
-          </section>
-        )}
-
-
-
-        {/* Government Alerts Section */}
-        <section className="mt-12">
-          <Card className="bg-orange-50 border-orange-200">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold flex items-center">
-                <AlertTriangle className="mr-3 h-6 w-6 text-orange-600" />
-                Government Security Alerts
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="border-l-4 border-l-orange-500 pl-4">
-                  <h4 className="font-semibold text-orange-800 mb-1">CERT-In Advisory</h4>
-                  <p className="text-sm text-orange-700">
-                    Multiple vulnerabilities reported in popular mobile banking apps. Users advised to update
-                    immediately.
-                  </p>
-                  <p className="text-xs text-orange-600 mt-1">Issued: January 15, 2024</p>
-                </div>
-                <div className="border-l-4 border-l-orange-500 pl-4">
-                  <h4 className="font-semibold text-orange-800 mb-1">RBI Warning</h4>
-                  <p className="text-sm text-orange-700">
-                    Fake loan apps targeting users with instant approval promises. Verify lender credentials before
-                    applying.
-                  </p>
-                  <p className="text-xs text-orange-600 mt-1">Issued: January 12, 2024</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Subscribe Section */}
-        <section className="mt-12">
-          <Card className="bg-primary/5 border-primary/20 text-center">
-            <CardContent className="pt-6">
-              <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">Stay Protected</h3>
-              <p className="text-muted-foreground mb-4">
-                Get the latest cyber security alerts and tips delivered to your phone via SMS
-              </p>
-              <Button size="lg">Subscribe to Alerts</Button>
-            </CardContent>
-          </Card>
-        </section>
+  {/* Remaining sections removed - Page shows only live threat feed */}
       </main>
     </div>
   )

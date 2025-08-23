@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation"
 import { FooterSection } from "@/components/footer-section"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -74,6 +75,33 @@ interface Achievement {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
+
+  function QuickButtons() {
+    return (
+      <>
+        <Button onClick={() => router.push('/learn/financial-fraud-prevention')} className="btn-primary h-auto p-4 flex flex-col items-center space-y-2">
+          <BookOpen className="h-6 w-6" />
+          <span>Continue Module</span>
+          <span className="text-xs opacity-80">Financial Fraud Prevention</span>
+        </Button>
+        <Button onClick={() => router.push('/quiz/identity-protection')} className="btn-secondary h-auto p-4 flex flex-col items-center space-y-2">
+          <Brain className="h-6 w-6" />
+          <span>Take Quiz</span>
+          <span className="text-xs opacity-80">Test your knowledge</span>
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => router.push('/news')}
+          className="h-auto p-4 flex flex-col items-center space-y-2 hover-lift bg-transparent"
+        >
+          <Star className="h-6 w-6" />
+          <span>Read latest news</span>
+          <span className="text-xs opacity-80">Latest security tips</span>
+        </Button>
+      </>
+    )
+  }
   const [userProgress] = useState<UserProgress>({
     totalScore: 2450,
     level: 8,
@@ -365,22 +393,22 @@ export default function DashboardPage() {
                     <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
                       <CheckCircle className="h-5 w-5 text-green-600" />
                       <div className="flex-1">
-                        <div className="font-semibold text-sm">Completed Phishing Detection Quiz</div>
-                        <div className="text-xs text-muted-foreground">Scored 92% • 2 days ago</div>
+                        <div className="font-semibold text-sm text-black">Completed Phishing Detection Quiz</div>
+                        <div className="text-xs text-black/70">Scored 92% • 2 days ago</div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
                       <BookOpen className="h-5 w-5 text-blue-600" />
                       <div className="flex-1">
-                        <div className="font-semibold text-sm">Started Financial Fraud Module</div>
-                        <div className="text-xs text-muted-foreground">75% complete • 1 day ago</div>
+                        <div className="font-semibold text-sm text-black">Started Financial Fraud Module</div>
+                        <div className="text-xs text-black/70">75% complete • 1 day ago</div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
                       <Trophy className="h-5 w-5 text-yellow-600" />
                       <div className="flex-1">
-                        <div className="font-semibold text-sm">Earned Streak Master Badge</div>
-                        <div className="text-xs text-muted-foreground">12-day learning streak • 3 days ago</div>
+                        <div className="font-semibold text-sm text-black">Earned Streak Master Badge</div>
+                        <div className="text-xs text-black/70">12-day learning streak • 3 days ago</div>
                       </div>
                     </div>
                   </div>
@@ -436,24 +464,8 @@ export default function DashboardPage() {
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-4">Continue Your Learning Journey</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Button className="btn-primary h-auto p-4 flex flex-col items-center space-y-2">
-                      <BookOpen className="h-6 w-6" />
-                      <span>Continue Module</span>
-                      <span className="text-xs opacity-80">Financial Fraud Prevention</span>
-                    </Button>
-                    <Button className="btn-secondary h-auto p-4 flex flex-col items-center space-y-2">
-                      <Brain className="h-6 w-6" />
-                      <span>Take Quiz</span>
-                      <span className="text-xs opacity-80">Test your knowledge</span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-auto p-4 flex flex-col items-center space-y-2 hover-lift bg-transparent"
-                    >
-                      <Star className="h-6 w-6" />
-                      <span>Read Articles</span>
-                      <span className="text-xs opacity-80">Latest security tips</span>
-                    </Button>
+                    {/* Quick action buttons wired to routes */}
+                    <QuickButtons />
                   </div>
                 </CardContent>
               </Card>

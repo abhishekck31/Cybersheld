@@ -13,8 +13,8 @@ interface PhoneValidationResult {
   phoneNumber: string
   isValid: boolean
   isScam: boolean
-  carrier: string
-  location: string
+  carriers: string[]
+  locations: string[]
   numberType: string
   riskLevel: "low" | "medium" | "high"
   threats: string[]
@@ -65,10 +65,10 @@ export default function PhoneValidatorPage() {
       const isIndianMobile = /^[6-9]\d{9}$/.test(cleanNumber.slice(-10))
       const isLandline = /^[2-5]\d{7,10}$/.test(cleanNumber)
 
-      let riskLevel: "low" | "medium" | "high" = "low"
-      let threats: string[] = []
-      let carrier = "Unknown"
-      const location = "India"
+  let riskLevel: "low" | "medium" | "high" = "low"
+  let threats: string[] = []
+  let carriers: string[] = []
+  const locations: string[] = ["India"]
       let numberType = "Mobile"
 
       if (isScam) {
@@ -79,29 +79,76 @@ export default function PhoneValidatorPage() {
         threats = ["International Number", "Potential Spam"]
       }
 
-      // Determine carrier based on prefix (simplified)
+      // Determine possible carriers based on prefix (heuristic)
       const prefix = cleanNumber.slice(-10, -8)
-      if (["70", "80", "81", "82", "83"].includes(prefix)) {
-        carrier = "Airtel"
-      } else if (["90", "91", "92", "93", "94", "95", "96", "97", "98", "99"].includes(prefix)) {
-        carrier = "Vodafone Idea"
-      } else if (["60", "61", "62", "63", "64", "65", "66", "67", "68", "69"].includes(prefix)) {
-        carrier = "Jio"
-      } else if (["70", "71", "72", "73", "74", "75", "76", "77", "78", "79"].includes(prefix)) {
-        carrier = "BSNL"
+      const carrierMap: Record<string, string[]> = {
+        // some prefixes may map to multiple carriers historically
+        '70': ['Airtel', 'BSNL'],
+        '71': ['BSNL'],
+        '72': ['BSNL'],
+        '73': ['BSNL'],
+        '74': ['BSNL'],
+        '75': ['BSNL'],
+        '76': ['BSNL'],
+        '77': ['BSNL'],
+        '78': ['BSNL'],
+        '79': ['BSNL'],
+        '80': ['Airtel'],
+        '81': ['Airtel'],
+        '82': ['Airtel'],
+        '83': ['Airtel'],
+        '90': ['Vodafone Idea'],
+        '91': ['Vodafone Idea'],
+        '92': ['Vodafone Idea'],
+        '93': ['Vodafone Idea'],
+        '94': ['Vodafone Idea'],
+        '95': ['Vodafone Idea'],
+        '96': ['Vodafone Idea'],
+        '97': ['Vodafone Idea'],
+        '98': ['Vodafone Idea'],
+        '99': ['Vodafone Idea'],
+        '60': ['Jio'],
+        '61': ['Jio'],
+        '62': ['Jio'],
+        '63': ['Jio'],
+        '64': ['Jio'],
+        '65': ['Jio'],
+        '66': ['Jio'],
+        '67': ['Jio'],
+        '68': ['Jio'],
+        '69': ['Jio'],
+      }
+
+      if (carrierMap[prefix]) {
+        carriers = carrierMap[prefix]
       }
 
       if (isLandline) {
         numberType = "Landline"
-        carrier = "Various"
+        carriers = ['Various']
+        // try to infer location from STD code (simple heuristic)
+        const std = cleanNumber.slice(-10, -7)
+        const stdMap: Record<string, string[]> = {
+          '011': ['Delhi'],
+          '022': ['Mumbai'],
+          '080': ['Bengaluru'],
+          '044': ['Chennai'],
+          '033': ['Kolkata'],
+        }
+        if (stdMap[std]) {
+          locations.splice(0, locations.length, ...stdMap[std])
+        }
       }
+
+      // If no carriers found, set Unknown
+      if (carriers.length === 0) carriers = ['Unknown']
 
       const mockResult: PhoneValidationResult = {
         phoneNumber: `+91 ${cleanNumber.slice(-10)}`,
         isValid: isIndianMobile || isLandline,
         isScam,
-        carrier,
-        location,
+        carriers,
+        locations,
         numberType,
         riskLevel,
         threats,
@@ -234,7 +281,17 @@ export default function PhoneValidatorPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-gray-700/30 p-4 rounded-lg border border-gray-600/30">
                     <h4 className="font-medium text-gray-200 mb-2">Carrier</h4>
-                    <p className="text-sm text-gray-400">{result.carrier}</p>
+                    <div className="text-sm text-gray-400">
+                      {result.carriers && result.carriers.length > 0 ? (
+                        <ul className="list-disc list-inside space-y-1">
+                          {result.carriers.map((c) => (
+                            <li key={c}>{c}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span>Unknown</span>
+                      )}
+                    </div>
                   </div>
                   <div className="bg-gray-700/30 p-4 rounded-lg border border-gray-600/30">
                     <h4 className="font-medium text-gray-200 mb-2">Type</h4>
@@ -242,7 +299,17 @@ export default function PhoneValidatorPage() {
                   </div>
                   <div className="bg-gray-700/30 p-4 rounded-lg border border-gray-600/30">
                     <h4 className="font-medium text-gray-200 mb-2">Location</h4>
-                    <p className="text-sm text-gray-400">{result.location}</p>
+                    <div className="text-sm text-gray-400">
+                      {result.locations && result.locations.length > 0 ? (
+                        <ul className="list-disc list-inside space-y-1">
+                          {result.locations.map((l) => (
+                            <li key={l}>{l}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span>India</span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -258,6 +325,10 @@ export default function PhoneValidatorPage() {
                     </div>
                   </div>
                 )}
+
+                <div className="mt-4 text-xs text-gray-400 bg-yellow-50/5 p-3 rounded">
+                  <strong className="text-gray-200">Note:</strong> Carrier and location inference is heuristic and based on public numbering prefixes. Numbers can be ported between operators (MNP) or belong to virtual operators (MVNOs), so multiple carriers may be possible or the true carrier may differ. Use this as guidance only.
+                </div>
               </div>
             </CardContent>
           </Card>

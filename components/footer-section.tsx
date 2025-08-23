@@ -4,87 +4,19 @@ import { Twitter, Github, Linkedin } from "lucide-react"
 
 export function FooterSection() {
   return (
-    <footer className="w-full max-w-[1320px] mx-auto px-4 sm:px-5 flex flex-col md:flex-row justify-between items-start gap-6 sm:gap-8 md:gap-0 py-8 sm:py-10 md:py-[70px]">
-      {/* Left Section: Logo, Description, Social Links */}
-      <div className="flex flex-col justify-start items-start gap-6 sm:gap-8 p-2 sm:p-4 md:p-8 w-full md:w-auto">
-        <div className="flex gap-3 items-stretch justify-center">
-          <div className="text-center text-foreground text-lg sm:text-xl font-semibold leading-4">Pointer</div>
-        </div>
-        <p className="text-foreground/90 text-sm font-medium leading-[18px] text-left">Coding made effortless</p>
-        <div className="flex justify-start items-start gap-3">
-          <a href="#" aria-label="Twitter" className="w-4 h-4 flex items-center justify-center">
-            <Twitter className="w-full h-full text-muted-foreground" />
-          </a>
-          <a href="#" aria-label="GitHub" className="w-4 h-4 flex items-center justify-center">
-            <Github className="w-full h-full text-muted-foreground" />
-          </a>
-          <a href="#" aria-label="LinkedIn" className="w-4 h-4 flex items-center justify-center">
-            <Linkedin className="w-full h-full text-muted-foreground" />
-          </a>
-        </div>
-      </div>
-      {/* Right Section: Product, Company, Resources */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 p-2 sm:p-4 md:p-8 w-full md:w-auto">
-        <div className="flex flex-col justify-start items-start gap-3">
-          <h3 className="text-muted-foreground text-sm font-medium leading-5">Product</h3>
-          <div className="flex flex-col justify-end items-start gap-2">
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Features
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Pricing
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Integrations
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Real-time Previews
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Multi-Agent Coding
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col justify-start items-start gap-3">
-          <h3 className="text-muted-foreground text-sm font-medium leading-5">Company</h3>
-          <div className="flex flex-col justify-center items-start gap-2">
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              About us
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Our team
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Careers
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Brand
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Contact
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col justify-start items-start gap-3 col-span-2 md:col-span-1">
-          <h3 className="text-muted-foreground text-sm font-medium leading-5">Resources</h3>
-          <div className="flex flex-col justify-center items-start gap-2">
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Terms of use
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              API Reference
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Documentation
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Community
-            </a>
-            <a href="#" className="text-foreground text-sm font-normal leading-5 hover:underline">
-              Support
-            </a>
-          </div>
-        </div>
+    <footer className="w-full bg-gray-900 border-t border-gray-800 py-8 mt-12">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-4">
+        <div className="text-2xl font-bold text-blue-400 tracking-wide mb-2 md:mb-0">CyberShield</div>
+        <nav className="flex flex-wrap gap-4 justify-center">
+          <a href="/" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Home</a>
+          <a href="/dashboard" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Dashboard</a>
+          <a href="/knowledge" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Knowledge</a>
+          <a href="/learn" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Learn</a>
+          <a href="/quiz" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Quiz</a>
+          <a href="/tools" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Tools</a>
+          <a href="/report" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Report</a>
+          <a href="/profile" className="text-gray-300 hover:text-blue-400 transition-colors text-sm font-medium">Profile</a>
+        </nav>
       </div>
     </footer>
   )

@@ -293,6 +293,11 @@ export default function IdentityProtectionQuizPage() {
     }
   }
 
+  function handleFinish() {
+  // Allow finishing even if the last question has no selected answer (treat as incorrect)
+  setShowResults(true)
+  }
+
   function handlePrevious() {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1)
@@ -373,8 +378,8 @@ export default function IdentityProtectionQuizPage() {
                 Previous
               </Button>
               <Button
-                onClick={handleNext}
-                disabled={selectedAnswers[currentQuestion] === undefined}
+                onClick={currentQuestion === quizQuestions.length - 1 ? handleFinish : handleNext}
+                disabled={currentQuestion === quizQuestions.length - 1 ? false : selectedAnswers[currentQuestion] === undefined}
                 className="bg-purple-600 hover:bg-purple-400 text-white font-bold"
               >
                 {currentQuestion === quizQuestions.length - 1 ? "Finish Quiz" : "Next Question"}

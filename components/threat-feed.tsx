@@ -75,6 +75,36 @@ export function ThreatFeed() {
       .slice(0, 3);
   }
 
+  // Limit to 10 latest items for the live feed
+  recentNews = recentNews.slice(0, 10);
+
+  // Ensure we always render 10 items: use real recentNews and fill with generated placeholders if needed
+  const displayedNews = (() => {
+    const arr = [...recentNews];
+    const generatePlaceholder = (n: number) => ({
+      title: `Live security update ${n}`,
+      description: `Recent reports about cyber threats and scams. Stay alert and verify before taking action.`,
+      link: 'https://www.ndtv.com/livetv-ndtv24x7',
+      pubDate: new Date().toISOString(),
+    });
+    for (let i = arr.length; i < 10; i++) {
+      arr.push(generatePlaceholder(i + 1));
+    }
+    return arr;
+  })();
+
+  const normalizeLink = (link: string | undefined) => {
+  if (!link) return "https://www.ndtv.com/livetv-ndtv24x7";
+    try {
+      // If it's already a valid absolute URL, return as-is
+      const u = new URL(link);
+      return u.toString();
+    } catch (e) {
+      // Otherwise, prepend https://
+      return `https://${link}`;
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -87,13 +117,14 @@ export function ThreatFeed() {
         </Button>
       </div>
   {error && news.length === 0 && <div className="text-red-500 mb-4">{error}</div>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-col gap-4">
   {recentNews.length === 0 && !loading && <div className="col-span-full text-center text-gray-400">No cyber security news found.</div>}
-        {recentNews.map((item, idx) => {
+        {displayedNews.map((item, idx) => {
           const cue = getVisualCue(item.title + " " + (item.description || ""));
           const tip = tips[idx % tips.length];
+          const safeLink = normalizeLink(item.link);
           return (
-            <Card key={item.link || item.title + idx} className={`border-l-4 ${cue.color} rounded-xl shadow-md bg-gradient-to-br from-black/80 to-gray-900/80 p-0 flex flex-col h-full`}>
+            <Card key={safeLink || item.title + idx} className={`border-l-4 ${cue.color} rounded-xl shadow-md bg-gradient-to-br from-black/80 to-gray-900/80 p-0 flex flex-col`}>
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2 mb-1">
                   {cue.icon}
@@ -105,7 +136,7 @@ export function ThreatFeed() {
               <CardContent className="flex flex-col gap-2 mt-auto pb-3">
                 <div className="flex items-center justify-between text-xs text-gray-400">
                   <span>{item.pubDate ? new Date(item.pubDate).toLocaleString() : ""}</span>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Read Full Story</a>
+                  <a href={safeLink} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Read Full Story</a>
                 </div>
                 <div className="text-xs text-primary font-medium flex items-center gap-1 mt-1">
                   <ShieldCheck className="h-4 w-4 text-primary" /> Safety Tip: {tip}

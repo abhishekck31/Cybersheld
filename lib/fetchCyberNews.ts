@@ -58,27 +58,42 @@ export async function fetchCyberNews(): Promise<NewsArticle[]> {
     }
   } catch {}
 
-  // Merge and deduplicate by title
-  const allResults = [...newsdataResults, ...newsapiResults, ...mediastackResults];
-  const seen = new Set();
+  // Normalize results: ensure each article has { title, description, link, pubDate }
+  const normalize = (article: any): any => {
+    const title = article.title || article.heading || article.name || "";
+    const description = article.description || article.summary || article.content || article.description || "";
+    const link = article.link || article.url || article.source?.url || article.source || "";
+    const pubDate = article.pubDate || article.publishedAt || article.published_at || article.pub_date || article.date || null;
+    return { ...article, title, description, link, pubDate };
+  };
+
+  const allResults = [...newsdataResults, ...newsapiResults, ...mediastackResults].map(normalize);
+
+  // Deduplicate by title and ensure there's a link
+  const seen = new Set<string>();
   let uniqueResults = allResults.filter((a) => {
     if (!a.title) return false;
+    if (!a.link) return false;
     const t = a.title.trim().toLowerCase();
     if (seen.has(t)) return false;
     seen.add(t);
     return true;
   });
 
-  // If no strict matches, fallback: show 3 most recent cyber security news from all sources
-  if (uniqueResults.length === 0 && allResults.length > 0) {
-    uniqueResults = [...allResults]
-      .filter(item => item.pubDate)
-      .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
-      .slice(0, 3);
-  }
-  // If still empty, fallback to last 3 from mediastack
+  // Sort by pubDate descending and return up to 10 latest items
+  uniqueResults = uniqueResults
+    .filter(item => item.pubDate)
+    .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+    .slice(0, 10);
+
+  // If still empty, try mediastack raw results (up to 10)
   if (uniqueResults.length === 0 && mediastackResults.length > 0) {
-    uniqueResults = mediastackResults.slice(0, 3);
+    uniqueResults = mediastackResults
+      .map(normalize)
+      .filter(item => item.link && item.pubDate)
+      .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+      .slice(0, 10);
   }
+
   return uniqueResults;
 }
