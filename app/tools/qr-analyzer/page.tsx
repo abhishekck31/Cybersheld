@@ -57,91 +57,40 @@ export default function QRAnalyzerPage() {
     // Simulate a 3-5 second scan with a bit of randomness
     const delay = 3000 + Math.floor(Math.random() * 2000)
     await new Promise((r) => setTimeout(r, delay))
-
-    // Real client-side decoding: draw image to canvas and decode pixels using jsQR
+    // Simple deterministic-random hardcoded demo based on file name and size.
     try {
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(String(reader.result))
-        reader.onerror = () => reject(new Error("Failed to read image"))
-        reader.readAsDataURL(file)
-      })
-
-      const img = document.createElement("img") as HTMLImageElement
-      img.src = dataUrl
-      await new Promise((res, rej) => {
-        img.onload = () => res(true)
-        img.onerror = () => rej(new Error("Failed to load image for decoding"))
-      })
-
-      // create an offscreen canvas (or hidden canvas) to draw the image
-      const canvas = document.createElement("canvas")
-      const ctx = canvas.getContext("2d")
-      if (!ctx) throw new Error("Canvas 2D not supported")
-
-      // scale large images down to a reasonable size to keep jsQR fast
-      const max = 1024
-      let w = img.width
-      let h = img.height
-      if (w > max || h > max) {
-        const scale = Math.min(max / w, max / h)
-        w = Math.round(w * scale)
-        h = Math.round(h * scale)
-      }
-      canvas.width = w
-      canvas.height = h
-      ctx.drawImage(img, 0, 0, w, h)
-
-      const imageData = ctx.getImageData(0, 0, w, h)
-
-  // dynamic import to avoid SSR issues
-  // @ts-ignore: jsqr has no bundled types in this project, import dynamically
-  const jsQR = (await import("jsqr")).default as any
-  const code = jsQR(imageData.data, imageData.width, imageData.height)
+      const name = file.name || "unknown"
+      const size = file.size || 0
+      // simple hash: sum of char codes + size, then pick a bucket
+      let sum = 0
+      for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i)
+      sum = (sum + size) % 10000
+      const bucket = sum % 3
 
       let scan: ScanResult
-      if (!code || !code.data) {
+      if (bucket === 0) {
         scan = {
           safe: false,
-          reason: "No QR code found or decoding failed",
+          reason: "Embedded content appears malicious (heuristic demo)",
+          extracted: "http://malicious.example.com/fake-pay",
+        }
+      } else if (bucket === 1) {
+        scan = {
+          safe: false,
+          reason: "Potential payment/request detected — treat with caution",
+          extracted: "upi://pay?pa=demo@upi&pn=Demo&am=50",
         }
       } else {
-        const payload = code.data.trim()
-
-        // Basic safety heuristics on the decoded payload
-        const lower = payload.toLowerCase()
-        if (lower.includes("malicious") || lower.includes("phish") || lower.includes("danger") || lower.includes("%2f%2e%2e")) {
-          scan = {
-            safe: false,
-            reason: "Decoded content matches known malicious indicators",
-            extracted: payload,
-          }
-        } else if (lower.startsWith("upi:") || lower.startsWith("upi://") || lower.includes("pay") || lower.includes("upi")) {
-          scan = {
-            safe: false,
-            reason: "Potential payment/payment-request QR detected — treat with caution",
-            extracted: payload,
-          }
-        } else if (lower.startsWith("http://") || lower.startsWith("https://") || lower.startsWith("mailto:") || /^[a-z0-9+.-]+:/i.test(lower)) {
-          // URLs and other schemes: check for suspicious patterns
-          const suspicious = lower.includes("@") && lower.includes("%")
-          scan = {
-            safe: !suspicious,
-            reason: suspicious ? "Decoded URL contains suspicious encoded sequences" : "No known malicious indicators found in decoded QR content",
-            extracted: payload,
-          }
-        } else {
-          scan = {
-            safe: true,
-            reason: "Decoded payload does not match known threat patterns",
-            extracted: payload,
-          }
+        scan = {
+          safe: true,
+          reason: "No obvious malicious indicators found (demo)",
+          extracted: "https://example.com/safe-info",
         }
       }
 
       setResult(scan)
     } catch (e: any) {
-      setError(e?.message || "Failed to decode QR image")
+      setError("Failed to analyze the uploaded image")
     } finally {
       setIsScanning(false)
     }
