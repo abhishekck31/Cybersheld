@@ -447,17 +447,17 @@ export default function QuizPage() {
                 Based on your progress, we recommend starting with the Payment Security Quiz to earn your next badge!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/quiz/payment-security">
-                  <Button className="bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-8 py-3">
+                <Link href="/quiz/payment-security" passHref legacyBehavior>
+                  <a className="bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-8 py-3 rounded flex items-center justify-center font-semibold transition-colors duration-200 cursor-pointer">
                     <Star className="h-5 w-5 mr-2" />
                     Recommended Quiz
-                  </Button>
+                  </a>
                 </Link>
-                <Link href="/study">
-                  <Button className="bg-orange-600 hover:bg-orange-700 text-white text-lg px-8 py-3">
+                <Link href="/study" passHref legacyBehavior>
+                  <a className="bg-orange-600 hover:bg-orange-700 text-white text-lg px-8 py-3 rounded flex items-center justify-center font-semibold transition-colors duration-200 cursor-pointer">
                     <BookOpen className="h-5 w-5 mr-2" />
                     Study Modules
-                  </Button>
+                  </a>
                 </Link>
               </div>
             </CardContent>
