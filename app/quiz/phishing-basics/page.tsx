@@ -163,50 +163,50 @@ export default function PhishingQuizPage() {
 
   if (showResults) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Navigation />
         <main className="container mx-auto max-w-4xl px-4 py-8">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="w-20 h-20 bg-cyan-50 rounded-full flex items-center justify-center">
-                <Trophy className="h-10 w-10 text-cyan-600" />
+              <div className="w-20 h-20 bg-cyan-900/20 rounded-full flex items-center justify-center border border-cyan-500/30">
+                <Trophy className="h-10 w-10 text-cyan-400" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Quiz Complete!</h1>
-            <p className="text-lg text-gray-600">Here's how you performed on the Phishing Detection Quiz</p>
+            <h1 className="text-4xl font-bold text-gray-100 mb-4">Quiz Complete!</h1>
+            <p className="text-lg text-gray-400">Here's how you performed on the Phishing Detection Quiz</p>
           </div>
 
-          <Card className="mb-8">
+          <Card className="mb-8 bg-gray-900/50 border-gray-700">
             <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold text-cyan-600">{score}%</CardTitle>
-              <CardDescription>Your Score</CardDescription>
+              <CardTitle className="text-3xl font-bold text-cyan-400">{score}%</CardTitle>
+              <CardDescription className="text-gray-400">Your Score</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="mb-6">
                 {score >= 90 ? (
-                  <Badge className="bg-green-100 text-green-800 px-4 py-2">
+                  <Badge className="bg-green-900/30 text-green-400 px-4 py-2 border border-green-500/30">
                     <Trophy className="mr-2 h-4 w-4" />
                     Excellent! You're a Phishing Expert
                   </Badge>
                 ) : score >= 70 ? (
-                  <Badge className="bg-blue-100 text-blue-800 px-4 py-2">
+                  <Badge className="bg-blue-900/30 text-blue-400 px-4 py-2 border border-blue-500/30">
                     <CheckCircle className="mr-2 h-4 w-4" />
                     Good Job! You're getting there
                   </Badge>
                 ) : (
-                  <Badge className="bg-orange-100 text-orange-800 px-4 py-2">
+                  <Badge className="bg-orange-900/30 text-orange-400 px-4 py-2 border border-orange-500/30">
                     <RotateCcw className="mr-2 h-4 w-4" />
                     Keep Learning! Try again
                   </Badge>
                 )}
               </div>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-400 mb-6">
                 You answered{" "}
                 {selectedAnswers.filter((answer, index) => answer === quizQuestions[index].correctAnswer).length} out of{" "}
                 {quizQuestions.length} questions correctly.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={resetQuiz} variant="outline" className="bg-transparent">
+                <Button onClick={resetQuiz} variant="outline" className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800">
                   <RotateCcw className="mr-2 h-4 w-4" />
                   Retake Quiz
                 </Button>
@@ -219,25 +219,27 @@ export default function PhishingQuizPage() {
 
           {/* Review Answers */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Review Your Answers</h2>
+            <h2 className="text-2xl font-bold text-gray-100 mb-4">Review Your Answers</h2>
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index]
               const isCorrect = userAnswer === question.correctAnswer
               return (
                 <Card
                   key={question.id}
-                  className={`border-l-4 ${isCorrect ? "border-l-green-500" : "border-l-red-500"}`}
+                  className={`border-l-4 bg-gray-900/50 border-gray-700 ${
+                    isCorrect ? "border-l-green-500" : "border-l-red-500"
+                  }`}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <CardTitle className="text-lg">Question {index + 1}</CardTitle>
+                      <CardTitle className="text-lg text-gray-100">Question {index + 1}</CardTitle>
                       {isCorrect ? (
-                        <CheckCircle className="h-6 w-6 text-green-600" />
+                        <CheckCircle className="h-6 w-6 text-green-400" />
                       ) : (
-                        <XCircle className="h-6 w-6 text-red-600" />
+                        <XCircle className="h-6 w-6 text-red-400" />
                       )}
                     </div>
-                    <CardDescription>{question.question}</CardDescription>
+                    <CardDescription className="text-gray-400">{question.question}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 mb-4">
@@ -246,10 +248,10 @@ export default function PhishingQuizPage() {
                           key={optionIndex}
                           className={`p-2 rounded ${
                             optionIndex === question.correctAnswer
-                              ? "bg-green-50 border border-green-200"
+                              ? "bg-green-900/30 border border-green-500/30 text-green-400"
                               : optionIndex === userAnswer && !isCorrect
-                                ? "bg-red-50 border border-red-200"
-                                : "bg-gray-50"
+                                ? "bg-red-900/30 border border-red-500/30 text-red-400"
+                                : "bg-gray-800/50 border border-gray-700 text-gray-300"
                           }`}
                         >
                           <span className="text-sm">
@@ -260,8 +262,8 @@ export default function PhishingQuizPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                      <p className="text-blue-800 text-sm">
+                    <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-3">
+                      <p className="text-blue-400 text-sm">
                         <strong>Explanation:</strong> {question.explanation}
                       </p>
                     </div>
@@ -276,12 +278,12 @@ export default function PhishingQuizPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Navigation />
 
       <main className="container mx-auto max-w-4xl px-4 py-8">
         {/* Back Button */}
-        <Link href="/quiz" className="inline-flex items-center text-cyan-600 hover:text-cyan-700 mb-6">
+        <Link href="/quiz" className="inline-flex items-center text-cyan-400 hover:text-cyan-300 mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Quizzes
         </Link>
@@ -289,29 +291,29 @@ export default function PhishingQuizPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center">
-              <Mail className="h-8 w-8 text-red-600" />
+            <div className="w-16 h-16 bg-red-900/20 rounded-full flex items-center justify-center border border-red-500/30">
+              <Mail className="h-8 w-8 text-red-400" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Phishing Detection Quiz</h1>
-          <p className="text-gray-600">Test your ability to spot fake emails and websites</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-100 mb-2">Phishing Detection Quiz</h1>
+          <p className="text-gray-400">Test your ability to spot fake emails and websites</p>
         </div>
 
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-400">
               Question {currentQuestion + 1} of {quizQuestions.length}
             </span>
-            <span className="text-sm text-gray-600">{Math.round(progress)}% Complete</span>
+            <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
         {/* Question */}
-        <Card className="mb-8">
+        <Card className="mb-8 bg-gray-900/50 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">{quizQuestions[currentQuestion].question}</CardTitle>
+            <CardTitle className="text-xl font-semibold text-gray-100">{quizQuestions[currentQuestion].question}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -321,8 +323,8 @@ export default function PhishingQuizPage() {
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full p-4 text-left rounded-lg border transition-colors ${
                     selectedAnswers[currentQuestion] === index
-                      ? "border-cyan-600 bg-cyan-50 text-cyan-700"
-                      : "border-gray-200 hover:border-cyan-300 hover:bg-gray-50"
+                      ? "border-cyan-500 bg-cyan-900/30 text-cyan-300"
+                      : "border-gray-600 hover:border-cyan-400 hover:bg-gray-800/50 text-gray-300"
                   }`}
                 >
                   <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
@@ -339,7 +341,7 @@ export default function PhishingQuizPage() {
             variant="outline"
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            className="bg-transparent"
+            className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800"
           >
             Previous
           </Button>
