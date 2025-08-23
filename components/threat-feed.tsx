@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { fetchCyberNews } from "@/lib/fetchCyberNews";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, AlertCircle, ShieldCheck, AlertTriangle } from "lucide-react";
@@ -32,12 +31,16 @@ export function ThreatFeed() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+
   const fetchFeed = async () => {
     setLoading(true);
     setError("");
     try {
-      const data = await fetchCyberNews();
-      setNews(data);
+      // Add cache-busting param to always get fresh data
+      const res = await fetch(`/api/cyber-news?_=${Date.now()}`);
+      if (!res.ok) throw new Error("API error");
+      const { news } = await res.json();
+      setNews(news);
       setLastUpdated(new Date());
     } catch (e) {
       setError("Failed to load threat feed.");
@@ -83,7 +86,7 @@ export function ThreatFeed() {
           <RefreshCw className={loading ? "animate-spin" : ""} /> Refresh
         </Button>
       </div>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
+  {error && news.length === 0 && <div className="text-red-500 mb-4">{error}</div>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   {recentNews.length === 0 && !loading && <div className="col-span-full text-center text-gray-400">No cyber security news found.</div>}
         {recentNews.map((item, idx) => {
