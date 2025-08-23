@@ -69,7 +69,14 @@ export async function fetchCyberNews(): Promise<NewsArticle[]> {
     return true;
   });
 
-  // If nothing from past 24h, show last 3 possible news from mediastack
+  // If no strict matches, fallback: show 3 most recent cyber security news from all sources
+  if (uniqueResults.length === 0 && allResults.length > 0) {
+    uniqueResults = [...allResults]
+      .filter(item => item.pubDate)
+      .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+      .slice(0, 3);
+  }
+  // If still empty, fallback to last 3 from mediastack
   if (uniqueResults.length === 0 && mediastackResults.length > 0) {
     uniqueResults = mediastackResults.slice(0, 3);
   }
