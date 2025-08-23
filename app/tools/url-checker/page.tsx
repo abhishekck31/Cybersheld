@@ -11,14 +11,7 @@ import { LinkIcon, ArrowLeft, CheckCircle, XCircle, AlertTriangle, Loader2, Shie
 import Link from "next/link"
 
 interface UrlCheckResult {
-  url: string
-  isSafe: boolean
-  threats: string[]
-  details: string
-  checkedAt: string
-  riskLevel: "low" | "medium" | "high"
-  domainAge: string
-  sslStatus: string
+  result: string
 }
 
 export default function UrlCheckerPage() {
@@ -41,116 +34,25 @@ export default function UrlCheckerPage() {
       setError("Please enter a URL to check")
       return
     }
-
     if (!validateUrl(url)) {
       setError("Please enter a valid URL (e.g., example.com or https://example.com)")
       return
     }
-
     setIsChecking(true)
     setError("")
     setResult(null)
-
     try {
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      const normalizedUrl = url.toLowerCase()
-
-      // Enhanced threat detection patterns
-      const highRiskPatterns = [
-        "phishing",
-        "malware",
-        "scam",
-        "fake",
-        "suspicious",
-        "virus",
-        "trojan",
-        "bit.ly",
-        "tinyurl",
-        "t.co",
-        "goo.gl",
-        "ow.ly",
-        "short.link",
-        "free-download",
-        "click-here",
-        "urgent-update",
-        "verify-account",
-        "suspended-account",
-        "security-alert",
-        "winner",
-        "congratulations",
-      ]
-
-      const mediumRiskPatterns = [
-        "download",
-        "free",
-        "offer",
-        "deal",
-        "discount",
-        "limited-time",
-        "survey",
-        "quiz",
-        "test",
-        "check",
-        "verify",
-      ]
-
-      const safePatterns = [
-        "google.com",
-        "microsoft.com",
-        "github.com",
-        "stackoverflow.com",
-        "wikipedia.org",
-        "mozilla.org",
-        "w3.org",
-        "ietf.org",
-        "rfc-editor.org",
-        "gov.in",
-        "nic.in",
-        "uidai.gov.in",
-        "incometax.gov.in",
-      ]
-
-      let riskLevel: "low" | "medium" | "high" = "low"
-      let threats: string[] = []
-
-      // Check for high-risk patterns
-      const foundHighRisk = highRiskPatterns.some((pattern) => normalizedUrl.includes(pattern))
-      const foundMediumRisk = mediumRiskPatterns.some((pattern) => normalizedUrl.includes(pattern))
-      const foundSafe = safePatterns.some((pattern) => normalizedUrl.includes(pattern))
-
-      if (foundHighRisk) {
-        riskLevel = "high"
-        threats = ["Phishing Attempt", "Malware Distribution", "Suspicious Domain", "Social Engineering"]
-      } else if (foundMediumRisk && !foundSafe) {
-        riskLevel = "medium"
-        threats = ["Potentially Unwanted Software", "Suspicious Content"]
-      } else if (foundSafe) {
-        riskLevel = "low"
-        threats = []
+      const response = await fetch("/api/url-analyzer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      })
+      const data = await response.json()
+      if (data?.result) {
+        setResult({ result: data.result })
+      } else {
+        setError(data?.error || "Failed to analyze URL. Please try again.")
       }
-
-      const mockResult: UrlCheckResult = {
-        url: url.startsWith("http") ? url : `https://${url}`,
-        isSafe: riskLevel === "low",
-        threats,
-        riskLevel,
-        domainAge: foundSafe ? "10+ years" : foundHighRisk ? "< 30 days" : "2-5 years",
-        sslStatus: foundHighRisk ? "Invalid/Missing SSL" : "Valid SSL Certificate",
-        details: foundHighRisk
-          ? "⚠️ This URL has been flagged as potentially dangerous. It may attempt to steal personal information, install malware, or conduct phishing attacks targeting Indian users."
-          : riskLevel === "medium"
-            ? "⚡ This URL appears to be safe but exercise caution. Avoid downloading files or entering personal information unless you trust the source completely."
-            : "✅ This URL appears to be safe based on our comprehensive security analysis. However, always remain vigilant when browsing online.",
-        checkedAt: new Date().toLocaleString("en-IN", {
-          timeZone: "Asia/Kolkata",
-          dateStyle: "medium",
-          timeStyle: "short",
-        }),
-      }
-
-      setResult(mockResult)
     } catch (err) {
       setError("Failed to check URL. Please try again.")
     } finally {
@@ -258,114 +160,16 @@ export default function UrlCheckerPage() {
 
         {/* Results */}
         {result && (
-          <Card
-            className={`mb-8 border-l-4 bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm animate-scale-in ${
-              result.isSafe
-                ? "border-l-green-500"
-                : result.riskLevel === "medium"
-                  ? "border-l-yellow-500"
-                  : "border-l-red-500"
-            }`}
-          >
+          <Card className="mb-8 border-l-4 bg-gray-800/50 border border-blue-500/50 backdrop-blur-sm animate-scale-in">
             <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-xl font-semibold flex items-center text-gray-100">
-                    {result.isSafe ? (
-                      <CheckCircle className="mr-3 h-6 w-6 text-green-400" />
-                    ) : result.riskLevel === "medium" ? (
-                      <AlertTriangle className="mr-3 h-6 w-6 text-yellow-400" />
-                    ) : (
-                      <XCircle className="mr-3 h-6 w-6 text-red-400" />
-                    )}
-                    {result.isSafe
-                      ? "URL is Safe"
-                      : result.riskLevel === "medium"
-                        ? "URL Requires Caution"
-                        : "URL is Potentially Dangerous"}
-                  </CardTitle>
-                  <CardDescription className="mt-2 text-gray-400">
-                    Checked: {result.checkedAt} | URL: {result.url}
-                  </CardDescription>
-                </div>
-                <Badge
-                  className={`${
-                    result.riskLevel === "low"
-                      ? "bg-green-600/20 text-green-400 border-green-500/50"
-                      : result.riskLevel === "medium"
-                        ? "bg-yellow-600/20 text-yellow-400 border-yellow-500/50"
-                        : "bg-red-600/20 text-red-400 border-red-500/50"
-                  } border`}
-                >
-                  {result.riskLevel === "low" ? "Safe" : result.riskLevel === "medium" ? "Caution" : "Dangerous"}
-                </Badge>
-              </div>
+              <CardTitle className="text-xl font-semibold flex items-center text-gray-100">
+                <CheckCircle className="mr-3 h-6 w-6 text-blue-400" />
+                Gemini AI Analysis
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <p className="text-gray-300">{result.details}</p>
-
-                {/* Security Details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-700/30 p-4 rounded-lg border border-gray-600/30">
-                    <h4 className="font-medium text-gray-200 mb-2">Domain Information</h4>
-                    <p className="text-sm text-gray-400">Age: {result.domainAge}</p>
-                  </div>
-                  <div className="bg-gray-700/30 p-4 rounded-lg border border-gray-600/30">
-                    <h4 className="font-medium text-gray-200 mb-2">SSL Certificate</h4>
-                    <p className="text-sm text-gray-400">{result.sslStatus}</p>
-                  </div>
-                </div>
-
-                {result.threats.length > 0 && (
-                  <div>
-                    <h4 className="font-medium text-gray-200 mb-2">Detected Threats:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {result.threats.map((threat, index) => (
-                        <Badge key={index} className="bg-red-600/20 text-red-400 border border-red-500/50">
-                          {threat}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div
-                  className={`rounded-lg p-4 border ${
-                    result.isSafe
-                      ? "bg-green-600/20 border-green-500/50"
-                      : result.riskLevel === "medium"
-                        ? "bg-yellow-600/20 border-yellow-500/50"
-                        : "bg-red-600/20 border-red-500/50"
-                  }`}
-                >
-                  <p
-                    className={`text-sm font-medium ${
-                      result.isSafe
-                        ? "text-green-400"
-                        : result.riskLevel === "medium"
-                          ? "text-yellow-400"
-                          : "text-red-400"
-                    }`}
-                  >
-                    {result.isSafe ? (
-                      <>
-                        <strong>Recommendation:</strong> This URL appears safe to visit. However, always remain cautious
-                        and avoid entering personal information unless you trust the website.
-                      </>
-                    ) : result.riskLevel === "medium" ? (
-                      <>
-                        <strong>Caution:</strong> This URL may be safe but exercise caution. Avoid downloading files or
-                        entering personal information unless you trust the source.
-                      </>
-                    ) : (
-                      <>
-                        <strong>Warning:</strong> Do not visit this URL. It may attempt to steal your personal
-                        information, install malware, or perform other malicious activities.
-                      </>
-                    )}
-                  </p>
-                </div>
+                <p className="text-gray-300 whitespace-pre-line">{result.result}</p>
               </div>
             </CardContent>
           </Card>
