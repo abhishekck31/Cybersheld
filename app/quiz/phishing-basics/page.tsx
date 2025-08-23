@@ -5,141 +5,122 @@ import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { Mail, ArrowLeft, CheckCircle, XCircle, Trophy, RotateCcw } from "lucide-react"
-import Link from "next/link"
 
-const quizQuestions = [
+import Link from "next/link"
+import { ArrowLeft, Mail, Trophy, CheckCircle, XCircle, RotateCcw } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+
+type QuizQuestion = {
+  id: number
+  question: string
+  options: string[]
+  correctAnswer: number
+  explanation: string
+}
+
+const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question:
-      "You receive an email from 'support@sbi-bank.com' asking you to verify your account details. What should you do?",
+    question: "What is phishing?",
     options: [
-      "Click the link and enter your details immediately",
-      "Check if the email address is from the official SBI domain",
-      "Call the bank using the official number to verify",
-      "Ignore the email completely",
+      "A method of catching fish using the internet",
+      "A cyber attack that tricks users into revealing sensitive information",
+      "A way to speed up your computer",
+      "A type of computer virus"
     ],
-    correctAnswer: 2,
-    explanation:
-      "Always verify suspicious emails by calling the bank directly using their official number. Legitimate banks use official domains and won't ask for sensitive details via email.",
+    correctAnswer: 1,
+    explanation: "Phishing is a cyber attack where attackers impersonate legitimate entities to trick users into revealing sensitive information like passwords or credit card numbers."
   },
   {
     id: 2,
-    question: "Which of these email addresses is most likely to be legitimate for HDFC Bank?",
-    options: ["noreply@hdfcbank.com", "support@hdfc-bank.co.in", "alerts@hdfcbank.net", "security@hdfc.bank.com"],
-    correctAnswer: 0,
-    explanation:
-      "Official bank emails typically come from their main domain. HDFC Bank's official domain is hdfcbank.com. Be wary of variations with extra words or different extensions.",
+    question: "Which of the following is a common sign of a phishing email?",
+    options: [
+      "The email comes from your own domain",
+      "The email contains poor grammar and spelling mistakes",
+      "The email is sent from your boss",
+      "The email has no links or attachments"
+    ],
+    correctAnswer: 1,
+    explanation: "Phishing emails often contain poor grammar and spelling mistakes, which can be a sign that the message is not legitimate."
   },
   {
     id: 3,
-    question:
-      "You get an SMS saying 'Congratulations! You've won ₹50,000 in KBC lottery. Click here to claim.' What's the red flag?",
+    question: "What should you do if you receive a suspicious email asking for your password?",
     options: [
-      "The amount is too small",
-      "You never participated in any lottery",
-      "SMS should come from official KBC number",
-      "All of the above",
+      "Reply with your password to be helpful",
+      "Click any links to see where they go",
+      "Ignore the email or report it to your IT department",
+      "Forward it to your friends"
     ],
-    correctAnswer: 3,
-    explanation:
-      "All these are red flags! Legitimate lotteries require participation, use official communication channels, and don't ask for personal details via SMS links.",
+    correctAnswer: 2,
+    explanation: "You should ignore suspicious emails or report them to your IT department. Never provide your password or click on suspicious links."
   },
   {
     id: 4,
-    question: "A website URL shows 'https://www.amazon.co.in.secure-login.com'. Is this legitimate?",
+    question: "Which URL is most likely a phishing attempt?",
     options: [
-      "Yes, it has HTTPS so it's secure",
-      "Yes, it mentions amazon.co.in",
-      "No, the actual domain is 'secure-login.com'",
-      "Maybe, need to check further",
+      "https://www.yourbank.com",
+      "https://secure.yourbank.com",
+      "https://yourbank.secure-login.com",
+      "https://login.yourbank.com"
     ],
     correctAnswer: 2,
-    explanation:
-      "The real domain here is 'secure-login.com', not Amazon. Scammers often use legitimate company names as subdomains to trick users. Always check what comes after the last dot.",
+    explanation: "Phishing URLs often use subdomains or similar-looking domains to trick users. 'yourbank.secure-login.com' is not the official bank domain."
   },
   {
     id: 5,
-    question: "What's the safest way to access your bank account online?",
+    question: "What is the best way to verify the legitimacy of a suspicious email?",
     options: [
-      "Click links in bank emails",
-      "Google search and click first result",
-      "Type the bank's official URL directly",
-      "Use bookmarks you've saved",
+      "Call the sender using a phone number from the official website",
+      "Reply to the email and ask if it's real",
+      "Click the link to check the website",
+      "Forward it to everyone in your company"
     ],
-    correctAnswer: 3,
-    explanation:
-      "Using saved bookmarks is safest as you've verified the URL before. Typing directly is also good, but bookmarks prevent typos that could lead to fake sites.",
+    correctAnswer: 0,
+    explanation: "Always verify suspicious emails by contacting the sender using contact information from the official website, not from the email itself."
   },
   {
     id: 6,
-    question:
-      "You receive a call claiming to be from your bank asking for your debit card CVV for 'verification'. What should you do?",
+    question: "Which of the following is NOT a recommended way to protect yourself from phishing?",
     options: [
-      "Provide the CVV since they called you",
-      "Ask for their employee ID first",
-      "Hang up and call the bank directly",
-      "Give partial information to test them",
+      "Enable multi-factor authentication",
+      "Keep your software updated",
+      "Share your passwords with coworkers",
+      "Be cautious with email attachments"
     ],
     correctAnswer: 2,
-    explanation:
-      "Banks never ask for CVV, PIN, or passwords over phone calls. Always hang up and call the bank using their official number to verify any requests.",
+    explanation: "You should never share your passwords with anyone. The other options are good security practices."
   },
   {
     id: 7,
-    question: "Which of these is a common sign of a phishing email?",
+    question: "What is 'spear phishing'?",
     options: [
-      "Urgent language like 'Act now or account will be closed'",
-      "Generic greetings like 'Dear Customer'",
-      "Spelling and grammar mistakes",
-      "All of the above",
+      "A phishing attack targeting a specific individual or organization",
+      "A phishing attack using fake websites",
+      "A phishing attack that uses malware",
+      "A phishing attack sent to random people"
     ],
-    correctAnswer: 3,
-    explanation:
-      "Phishing emails often use urgency to pressure quick action, generic greetings because they don't have your real name, and contain errors because they're hastily created.",
+    correctAnswer: 0,
+    explanation: "Spear phishing targets specific individuals or organizations, often using personalized information to appear more convincing."
   },
   {
     id: 8,
-    question: "What should you do if you accidentally clicked a suspicious link?",
+    question: "Why should you hover over links in emails before clicking them?",
     options: [
-      "Nothing, just close the browser",
-      "Change passwords for important accounts",
-      "Run antivirus scan on your device",
-      "Both B and C",
+      "To see if the link is too long",
+      "To check if the link leads to a legitimate website",
+      "To make the link change color",
+      "To copy the link"
     ],
-    correctAnswer: 3,
-    explanation:
-      "If you clicked a suspicious link, immediately change passwords for important accounts and run a security scan. The link might have installed malware or compromised your information.",
-  },
+    correctAnswer: 1,
+    explanation: "Hovering over links lets you preview the actual URL, helping you spot suspicious or fake websites."
+  }
 ]
 
 export default function PhishingQuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([])
   const [showResults, setShowResults] = useState(false)
-  const [quizCompleted, setQuizCompleted] = useState(false)
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const newAnswers = [...selectedAnswers]
-    newAnswers[currentQuestion] = answerIndex
-    setSelectedAnswers(newAnswers)
-  }
-
-  const handleNext = () => {
-    if (currentQuestion < quizQuestions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1)
-    } else {
-      setShowResults(true)
-      setQuizCompleted(true)
-    }
-  }
-
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1)
-    }
-  }
 
   const calculateScore = () => {
     let correct = 0
@@ -151,67 +132,66 @@ export default function PhishingQuizPage() {
     return Math.round((correct / quizQuestions.length) * 100)
   }
 
+  const score = calculateScore()
+
+  // Move resetQuiz above its first usage
   const resetQuiz = () => {
     setCurrentQuestion(0)
     setSelectedAnswers([])
     setShowResults(false)
-    setQuizCompleted(false)
   }
-
-  const score = calculateScore()
-  const progress = ((currentQuestion + 1) / quizQuestions.length) * 100
 
   if (showResults) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black text-gray-100">
         <Navigation />
         <main className="container mx-auto max-w-4xl px-4 py-8">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="w-20 h-20 bg-cyan-50 rounded-full flex items-center justify-center">
-                <Trophy className="h-10 w-10 text-cyan-600" />
+              <div className="w-20 h-20 bg-cyan-900/30 rounded-full flex items-center justify-center">
+                <Trophy className="h-10 w-10 text-cyan-400" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Quiz Complete!</h1>
-            <p className="text-lg text-gray-600">Here's how you performed on the Phishing Detection Quiz</p>
+            <h1 className="text-4xl font-bold text-cyan-200 mb-4" style={{textShadow:'0 0 8px #00fff7'}}>Quiz Complete!</h1>
+            <p className="text-lg text-gray-300">Here's how you performed on the Phishing Detection Quiz</p>
           </div>
 
-          <Card className="mb-8">
+          <Card className="mb-8 bg-gray-900/80 border border-cyan-900/40">
             <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold text-cyan-600">{score}%</CardTitle>
-              <CardDescription>Your Score</CardDescription>
+              <CardTitle className="text-3xl font-bold text-cyan-400" style={{textShadow:'0 0 6px #00fff7'}}>{score}%</CardTitle>
+              <CardDescription className="text-gray-300">Your Score</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="mb-6">
                 {score >= 90 ? (
-                  <Badge className="bg-green-100 text-green-800 px-4 py-2">
+                  <Badge className="bg-green-900/30 text-green-300 px-4 py-2 border border-green-400/30">
                     <Trophy className="mr-2 h-4 w-4" />
                     Excellent! You're a Phishing Expert
                   </Badge>
                 ) : score >= 70 ? (
-                  <Badge className="bg-blue-100 text-blue-800 px-4 py-2">
+                  <Badge className="bg-blue-900/30 text-blue-300 px-4 py-2 border border-blue-400/30">
                     <CheckCircle className="mr-2 h-4 w-4" />
                     Good Job! You're getting there
                   </Badge>
                 ) : (
-                  <Badge className="bg-orange-100 text-orange-800 px-4 py-2">
+                  <Badge className="bg-orange-900/30 text-orange-300 px-4 py-2 border border-orange-400/30">
                     <RotateCcw className="mr-2 h-4 w-4" />
                     Keep Learning! Try again
                   </Badge>
                 )}
               </div>
-              <p className="text-gray-600 mb-6">
-                You answered{" "}
-                {selectedAnswers.filter((answer, index) => answer === quizQuestions[index].correctAnswer).length} out of{" "}
+              <p className="text-gray-300 mb-6">
+                You answered{' '}
+                {selectedAnswers.filter((answer, index) => answer === quizQuestions[index].correctAnswer).length} out of{' '}
                 {quizQuestions.length} questions correctly.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={resetQuiz} variant="outline" className="bg-transparent">
+                <Button onClick={resetQuiz} variant="outline" className="bg-transparent border-cyan-700 text-cyan-300">
                   <RotateCcw className="mr-2 h-4 w-4" />
                   Retake Quiz
                 </Button>
                 <Link href="/quiz">
-                  <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">Try Another Quiz</Button>
+                  <Button className="bg-cyan-600 hover:bg-cyan-400 text-white font-bold">Try Another Quiz</Button>
                 </Link>
               </div>
             </CardContent>
@@ -219,25 +199,25 @@ export default function PhishingQuizPage() {
 
           {/* Review Answers */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Review Your Answers</h2>
+            <h2 className="text-2xl font-bold text-cyan-200 mb-4" style={{textShadow:'0 0 6px #00fff7'}}>Review Your Answers</h2>
             {quizQuestions.map((question, index) => {
               const userAnswer = selectedAnswers[index]
               const isCorrect = userAnswer === question.correctAnswer
               return (
                 <Card
                   key={question.id}
-                  className={`border-l-4 ${isCorrect ? "border-l-green-500" : "border-l-red-500"}`}
+                  className={`border-l-4 ${isCorrect ? "border-l-green-400" : "border-l-red-400"} bg-gray-900/80`}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <CardTitle className="text-lg">Question {index + 1}</CardTitle>
+                      <CardTitle className="text-lg text-cyan-100">Question {index + 1}</CardTitle>
                       {isCorrect ? (
-                        <CheckCircle className="h-6 w-6 text-green-600" />
+                        <CheckCircle className="h-6 w-6 text-green-400" />
                       ) : (
-                        <XCircle className="h-6 w-6 text-red-600" />
+                        <XCircle className="h-6 w-6 text-red-400" />
                       )}
                     </div>
-                    <CardDescription>{question.question}</CardDescription>
+                    <CardDescription className="text-gray-300">{question.question}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 mb-4">
@@ -246,22 +226,22 @@ export default function PhishingQuizPage() {
                           key={optionIndex}
                           className={`p-2 rounded ${
                             optionIndex === question.correctAnswer
-                              ? "bg-green-50 border border-green-200"
+                              ? "bg-green-900/30 border border-green-400/30 text-green-200"
                               : optionIndex === userAnswer && !isCorrect
-                                ? "bg-red-50 border border-red-200"
-                                : "bg-gray-50"
+                                ? "bg-red-900/30 border border-red-400/30 text-red-200"
+                                : "bg-gray-800 text-gray-200"
                           }`}
                         >
                           <span className="text-sm">
-                            {optionIndex === question.correctAnswer && "✓ "}
-                            {optionIndex === userAnswer && optionIndex !== question.correctAnswer && "✗ "}
+                            {optionIndex === question.correctAnswer && "\u2713 "}
+                            {optionIndex === userAnswer && optionIndex !== question.correctAnswer && "\u2717 "}
                             {option}
                           </span>
                         </div>
                       ))}
                     </div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                      <p className="text-blue-800 text-sm">
+                    <div className="bg-cyan-900/30 border border-cyan-400/30 rounded-lg p-3">
+                      <p className="text-cyan-200 text-sm">
                         <strong>Explanation:</strong> {question.explanation}
                       </p>
                     </div>
@@ -274,14 +254,42 @@ export default function PhishingQuizPage() {
       </div>
     )
   }
+  const [quizCompleted, setQuizCompleted] = useState(false)
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const newAnswers = [...selectedAnswers]
+    newAnswers[currentQuestion] = answerIndex
+    setSelectedAnswers(newAnswers)
+  }
+
+  // Remove duplicate and incomplete resetQuiz and misplaced code
+  const progress = ((currentQuestion + 1) / quizQuestions.length) * 100
+
+  // Remove duplicate if (showResults) block below
+  // (No replacement needed; just remove the duplicate and incomplete code block)
+
+  // Add handleNext and handlePrevious functions
+  function handleNext() {
+    if (currentQuestion < quizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+    } else {
+      setShowResults(true)
+    }
+  }
+
+  function handlePrevious() {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black text-gray-100">
       <Navigation />
 
       <main className="container mx-auto max-w-4xl px-4 py-8">
         {/* Back Button */}
-        <Link href="/quiz" className="inline-flex items-center text-cyan-600 hover:text-cyan-700 mb-6">
+        <Link href="/quiz" className="inline-flex items-center text-cyan-400 hover:text-cyan-200 mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Quizzes
         </Link>
@@ -289,68 +297,79 @@ export default function PhishingQuizPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center">
-              <Mail className="h-8 w-8 text-red-600" />
+            <div className="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center">
+              <Mail className="h-8 w-8 text-red-400" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Phishing Detection Quiz</h1>
-          <p className="text-gray-600">Test your ability to spot fake emails and websites</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-cyan-200 mb-2" style={{textShadow:'0 0 6px #00fff7'}}>Phishing Detection Quiz</h1>
+          <p className="text-gray-300">Test your ability to spot fake emails and websites</p>
         </div>
 
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-400">
               Question {currentQuestion + 1} of {quizQuestions.length}
             </span>
-            <span className="text-sm text-gray-600">{Math.round(progress)}% Complete</span>
+            <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
         {/* Question */}
-        <Card className="mb-8">
+        <Card className="mb-8 bg-gray-900/80 border border-cyan-900/40">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">{quizQuestions[currentQuestion].question}</CardTitle>
+            <CardTitle className="text-xl font-semibold text-cyan-100">{quizQuestions[currentQuestion].question}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {quizQuestions[currentQuestion].options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerSelect(index)}
-                  className={`w-full p-4 text-left rounded-lg border transition-colors ${
+            {quizQuestions[currentQuestion].options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleAnswerSelect(index)}
+                className={`w-full text-left px-4 py-3 rounded border transition-colors
+                  ${
                     selectedAnswers[currentQuestion] === index
-                      ? "border-cyan-600 bg-cyan-50 text-cyan-700"
-                      : "border-gray-200 hover:border-cyan-300 hover:bg-gray-50"
-                  }`}
-                >
-                  <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
-                  {option}
-                </button>
-              ))}
+                      ? index === quizQuestions[currentQuestion].correctAnswer
+                        ? "bg-green-900/30 border-green-400/30 text-green-200"
+                        : "bg-red-900/30 border-red-400/30 text-red-200"
+                      : "bg-gray-800 border-gray-700 text-gray-200 hover:bg-cyan-900/20"
+                  }
+                `}
+                disabled={selectedAnswers[currentQuestion] !== undefined}
+              >
+                {option}
+              </button>
+            ))}
+            </div>
+            {/* Show explanation if answered */}
+            {selectedAnswers[currentQuestion] !== undefined && (
+              <div className="mt-4 bg-cyan-900/30 border border-cyan-400/30 rounded-lg p-3">
+                <p className="text-cyan-200 text-sm">
+                  <strong>Explanation:</strong> {quizQuestions[currentQuestion].explanation}
+                </p>
+              </div>
+            )}
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8">
+              <Button
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentQuestion === 0}
+                className="bg-transparent border-cyan-700 text-cyan-300"
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={selectedAnswers[currentQuestion] === undefined}
+                className="bg-cyan-600 hover:bg-cyan-400 text-white font-bold"
+              >
+                {currentQuestion === quizQuestions.length - 1 ? "Finish Quiz" : "Next Question"}
+              </Button>
             </div>
           </CardContent>
         </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentQuestion === 0}
-            className="bg-transparent"
-          >
-            Previous
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={selectedAnswers[currentQuestion] === undefined}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white"
-          >
-            {currentQuestion === quizQuestions.length - 1 ? "Finish Quiz" : "Next Question"}
-          </Button>
-        </div>
       </main>
     </div>
   )
