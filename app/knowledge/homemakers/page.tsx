@@ -1,52 +1,44 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { GraduationCap, Smartphone, CreditCard, Users, AlertTriangle, ArrowLeft, Shield, Eye, Lock } from "lucide-react"
+import { Home, ShoppingCart, Gift, Users, AlertTriangle, ArrowLeft, Lock, Eye } from "lucide-react"
 import Link from "next/link"
 
-const studentThreats = [
+const homemakerThreats = [
   {
-    title: "Social Media Scams",
-    description: "Fake profiles, romance scams, and fraudulent job offers targeting students",
-    icon: Users,
+    title: "Online Shopping Scams",
+    description: "Fake e-commerce sites, fraudulent sellers, and non-delivery of goods.",
+    icon: ShoppingCart,
     color: "text-blue-600",
     bgColor: "bg-blue-50",
     tips: [
-      "Never share personal details with strangers online",
-      "Verify job offers through official company websites",
-      "Be cautious of too-good-to-be-true opportunities",
+      "Shop only on trusted platforms.",
+      "Check seller ratings and reviews.",
+      "Use secure payment methods.",
     ],
   },
   {
-    title: "Online Shopping Fraud",
-    description: "Fake e-commerce sites and fraudulent sellers targeting budget-conscious students",
-    icon: CreditCard,
+    title: "Fake Offers & Lotteries",
+    description: "Scams promising gifts, prizes, or discounts to steal money or personal info.",
+    icon: Gift,
     color: "text-green-600",
     bgColor: "bg-green-50",
-    tips: ["Shop only on trusted platforms", "Check seller ratings and reviews", "Use secure payment methods"],
+    tips: [
+      "Be skeptical of too-good-to-be-true offers.",
+      "Never pay fees to claim a prize.",
+      "Don't share personal details for offers.",
+    ],
   },
   {
-    title: "Academic Scams",
-    description: "Fake certificates, degree mills, and fraudulent scholarship offers",
-    icon: GraduationCap,
+    title: "Family & Social Media Fraud",
+    description: "Impersonation of family members or friends to request money or information.",
+    icon: Users,
     color: "text-purple-600",
     bgColor: "bg-purple-50",
     tips: [
-      "Verify institutions through official education boards",
-      "Research scholarship providers thoroughly",
-      "Never pay upfront fees for scholarships",
-    ],
-  },
-  {
-    title: "Mobile App Fraud",
-    description: "Malicious apps, fake gaming rewards, and subscription traps",
-    icon: Smartphone,
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
-    tips: [
-      "Download apps only from official stores",
-      "Read permissions carefully before installing",
-      "Be wary of apps asking for unnecessary access",
+      "Verify requests for money, even from known contacts.",
+      "Be cautious about sharing family details online.",
+      "Set social media profiles to private.",
     ],
   },
 ]
@@ -54,60 +46,54 @@ const studentThreats = [
 const safetyPractices = [
   {
     title: "Strong Password Habits",
-    description: "Use unique passwords for each account and enable two-factor authentication",
+    description: "Use unique passwords for each account and enable two-factor authentication.",
     icon: Lock,
   },
   {
     title: "Privacy Settings",
-    description: "Regularly review and update privacy settings on social media platforms",
+    description: "Regularly review and update privacy settings on social media platforms.",
     icon: Eye,
   },
   {
-    title: "Secure Browsing",
-    description: "Always look for HTTPS and avoid clicking suspicious links",
-    icon: Shield,
+    title: "Safe Shopping",
+    description: "Always look for HTTPS and avoid clicking suspicious links.",
+    icon: ShoppingCart,
   },
 ]
 
-export default function StudentKnowledgePage() {
+export default function HomemakersKnowledgePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-
       <main className="container mx-auto max-w-4xl px-4 py-8">
         {/* Back Button */}
         <Link href="/knowledge" className="inline-flex items-center text-primary hover:text-primary/80 mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Knowledge Hub
         </Link>
-
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <Home className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Cyber Safety for Students</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Cyber Safety for Homemakers</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Essential cyber security knowledge for students to stay safe online while studying, socializing, and
-            shopping
+            Essential cyber security knowledge for homemakers to stay safe while shopping, socializing, and protecting the family online.
           </p>
         </div>
-
-        {/* Student-Specific Threats */}
+        {/* Homemaker-Specific Threats */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-foreground mb-6">Common Threats Targeting Students</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">Common Threats Targeting Homemakers</h2>
           <div className="space-y-6">
-            {studentThreats.map((threat, index) => {
+            {homemakerThreats.map((threat, index) => {
               const Icon = threat.icon
               return (
                 <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
                     <div className="flex items-start space-x-4">
-                      <div
-                        className={`w-12 h-12 ${threat.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}
-                      >
+                      <div className={`w-12 h-12 ${threat.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
                         <Icon className={`h-6 w-6 ${threat.color}`} />
                       </div>
                       <div className="flex-1">
@@ -132,7 +118,6 @@ export default function StudentKnowledgePage() {
             })}
           </div>
         </section>
-
         {/* Best Practices */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-foreground mb-6">Essential Safety Practices</h2>
@@ -157,7 +142,6 @@ export default function StudentKnowledgePage() {
             })}
           </div>
         </section>
-
         {/* Emergency Contact */}
         <Card className="bg-destructive/5 border-destructive/20 mb-8">
           <CardHeader>
@@ -186,7 +170,6 @@ export default function StudentKnowledgePage() {
             </div>
           </CardContent>
         </Card>
-
         {/* Next Steps */}
         <div className="text-center">
           <div className="space-y-4">

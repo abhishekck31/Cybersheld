@@ -318,10 +318,26 @@ export default function ArticlesPage() {
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between mb-3">
-                      <Badge variant="outline" className="text-xs">
+                      <Badge
+                          variant="outline"
+                          className="text-xs border-cyan-400/90 text-cyan-100 bg-black/80 font-extrabold px-3 py-1"
+                          style={{
+                            letterSpacing: '0.02em',
+                            background: 'rgba(0,255,255,0.08)',
+                            boxShadow: '0 0 8px #00fff7',
+                          }}
+                      >
                         {article.category}
                       </Badge>
-                      <Badge className={getDifficultyColor(article.difficulty)}>{article.difficulty}</Badge>
+                      <Badge
+                        className={
+                          getDifficultyColor(article.difficulty) +
+                          " border-cyan-400/90 text-cyan-100 bg-black/80 font-extrabold px-3 py-1 drop-shadow-[0_0_10px_#00fff7] ring-2 ring-cyan-400/60"
+                        }
+                        style={{textShadow:'0 0 10px #00fff7, 0 0 2px #fff'}}
+                      >
+                        {article.difficulty}
+                      </Badge>
                     </div>
 
                     <CardTitle className="text-lg font-bold leading-tight hover:text-primary transition-colors">
@@ -367,7 +383,14 @@ export default function ArticlesPage() {
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1 mb-4">
                       {article.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs px-2 py-0">
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className="text-xs px-2 py-0 bg-blue-900/80 text-white border-blue-400/80 shadow"
+                          style={{
+                            letterSpacing: '0.01em',
+                          }}
+                        >
                           {tag}
                         </Badge>
                       ))}

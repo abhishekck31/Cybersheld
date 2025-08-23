@@ -134,126 +134,7 @@ export default function PhishingQuizPage() {
 
   const score = calculateScore()
 
-  // Move resetQuiz above its first usage
-  const resetQuiz = () => {
-    setCurrentQuestion(0)
-    setSelectedAnswers([])
-    setShowResults(false)
-  }
-
-  if (showResults) {
-    return (
-      <div className="min-h-screen bg-black text-gray-100">
-        <Navigation />
-        <main className="container mx-auto max-w-4xl px-4 py-8">
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-20 h-20 bg-cyan-900/30 rounded-full flex items-center justify-center">
-                <Trophy className="h-10 w-10 text-cyan-400" />
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold text-cyan-200 mb-4" style={{textShadow:'0 0 8px #00fff7'}}>Quiz Complete!</h1>
-            <p className="text-lg text-gray-300">Here's how you performed on the Phishing Detection Quiz</p>
-          </div>
-
-          <Card className="mb-8 bg-gray-900/80 border border-cyan-900/40">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold text-cyan-400" style={{textShadow:'0 0 6px #00fff7'}}>{score}%</CardTitle>
-              <CardDescription className="text-gray-300">Your Score</CardDescription>
-            </CardHeader>
-            <CardContent className="text-center">
-              <div className="mb-6">
-                {score >= 90 ? (
-                  <Badge className="bg-green-900/30 text-green-300 px-4 py-2 border border-green-400/30">
-                    <Trophy className="mr-2 h-4 w-4" />
-                    Excellent! You're a Phishing Expert
-                  </Badge>
-                ) : score >= 70 ? (
-                  <Badge className="bg-blue-900/30 text-blue-300 px-4 py-2 border border-blue-400/30">
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Good Job! You're getting there
-                  </Badge>
-                ) : (
-                  <Badge className="bg-orange-900/30 text-orange-300 px-4 py-2 border border-orange-400/30">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Keep Learning! Try again
-                  </Badge>
-                )}
-              </div>
-              <p className="text-gray-300 mb-6">
-                You answered{' '}
-                {selectedAnswers.filter((answer, index) => answer === quizQuestions[index].correctAnswer).length} out of{' '}
-                {quizQuestions.length} questions correctly.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={resetQuiz} variant="outline" className="bg-transparent border-cyan-700 text-cyan-300">
-                  <RotateCcw className="mr-2 h-4 w-4" />
-                  Retake Quiz
-                </Button>
-                <Link href="/quiz">
-                  <Button className="bg-cyan-600 hover:bg-cyan-400 text-white font-bold">Try Another Quiz</Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Review Answers */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-cyan-200 mb-4" style={{textShadow:'0 0 6px #00fff7'}}>Review Your Answers</h2>
-            {quizQuestions.map((question, index) => {
-              const userAnswer = selectedAnswers[index]
-              const isCorrect = userAnswer === question.correctAnswer
-              return (
-                <Card
-                  key={question.id}
-                  className={`border-l-4 ${isCorrect ? "border-l-green-400" : "border-l-red-400"} bg-gray-900/80`}
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <CardTitle className="text-lg text-cyan-100">Question {index + 1}</CardTitle>
-                      {isCorrect ? (
-                        <CheckCircle className="h-6 w-6 text-green-400" />
-                      ) : (
-                        <XCircle className="h-6 w-6 text-red-400" />
-                      )}
-                    </div>
-                    <CardDescription className="text-gray-300">{question.question}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 mb-4">
-                      {question.options.map((option, optionIndex) => (
-                        <div
-                          key={optionIndex}
-                          className={`p-2 rounded ${
-                            optionIndex === question.correctAnswer
-                              ? "bg-green-900/30 border border-green-400/30 text-green-200"
-                              : optionIndex === userAnswer && !isCorrect
-                                ? "bg-red-900/30 border border-red-400/30 text-red-200"
-                                : "bg-gray-800 text-gray-200"
-                          }`}
-                        >
-                          <span className="text-sm">
-                            {optionIndex === question.correctAnswer && "\u2713 "}
-                            {optionIndex === userAnswer && optionIndex !== question.correctAnswer && "\u2717 "}
-                            {option}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="bg-cyan-900/30 border border-cyan-400/30 rounded-lg p-3">
-                      <p className="text-cyan-200 text-sm">
-                        <strong>Explanation:</strong> {question.explanation}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </main>
-      </div>
-    )
-  }
+  // Only keep the correct resetQuiz and if (showResults) block (already present below)
   const [quizCompleted, setQuizCompleted] = useState(false)
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -287,6 +168,7 @@ export default function PhishingQuizPage() {
     <div className="min-h-screen bg-black text-gray-100">
       <Navigation />
 
+
       <main className="container mx-auto max-w-4xl px-4 py-8">
         {/* Back Button */}
         <Link href="/quiz" className="inline-flex items-center text-cyan-400 hover:text-cyan-200 mb-6">
@@ -294,16 +176,79 @@ export default function PhishingQuizPage() {
           Back to Quizzes
         </Link>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center">
-              <Mail className="h-8 w-8 text-red-400" />
+        {/* Learning Section */}
+        <section className="mb-10">
+          <div className="bg-cyan-950/80 border border-cyan-800/40 rounded-xl p-6 shadow-lg">
+            <h2 className="text-2xl md:text-3xl font-bold text-cyan-200 mb-2" style={{textShadow:'0 0 6px #00fff7'}}>Phishing Attacks</h2>
+            <p className="text-cyan-100 mb-4">Learn to identify and protect yourself from fake emails, messages, and websites designed to steal your information</p>
+            <h3 className="text-xl font-semibold text-cyan-300 mb-2">What is Phishing?</h3>
+            <p className="text-gray-200 mb-4">Phishing is a cyber attack where criminals pretend to be trustworthy organizations to steal your personal information like passwords, credit card numbers, or bank details.</p>
+            <div className="mb-4">
+              <span className="block text-yellow-300 font-semibold">Remember:</span>
+              <span className="block text-gray-200">Legitimate banks, government agencies, and companies will never ask for sensitive information via email, SMS, or phone calls.</span>
+            </div>
+            <h3 className="text-xl font-semibold text-cyan-300 mb-2">Common Phishing Examples</h3>
+            <div className="grid md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-gray-900/60 rounded-lg p-4 border border-cyan-900/30">
+                <span className="block text-cyan-400 font-bold mb-1">Email</span>
+                <span className="block text-gray-100">Fake Bank Email</span>
+                <span className="block text-gray-300 text-sm">Urgent account verification required</span>
+                <span className="block text-red-400 text-xs mt-2">Warning: Banks never ask for passwords via email</span>
+              </div>
+              <div className="bg-gray-900/60 rounded-lg p-4 border border-cyan-900/30">
+                <span className="block text-cyan-400 font-bold mb-1">SMS</span>
+                <span className="block text-gray-100">Prize Winner Message</span>
+                <span className="block text-gray-300 text-sm">Congratulations! You've won ₹50,000. Click link to claim.</span>
+                <span className="block text-red-400 text-xs mt-2">Warning: Legitimate contests don't ask for personal details via SMS</span>
+              </div>
+              <div className="bg-gray-900/60 rounded-lg p-4 border border-cyan-900/30">
+                <span className="block text-cyan-400 font-bold mb-1">Website</span>
+                <span className="block text-gray-100">Fake Government Portal</span>
+                <span className="block text-gray-300 text-sm">Update your Aadhaar details immediately</span>
+                <span className="block text-red-400 text-xs mt-2">Warning: Always verify URLs - look for https:// and official domains</span>
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold text-cyan-300 mb-2">How to Protect Yourself</h3>
+            <ul className="list-disc list-inside text-gray-200 mb-4 space-y-1">
+              <li><span className="text-cyan-200 font-semibold">Check the Sender:</span> Verify email addresses and phone numbers. Banks use official domains.</li>
+              <li><span className="text-cyan-200 font-semibold">Don't Click Suspicious Links:</span> Hover over links to see the actual URL before clicking.</li>
+              <li><span className="text-cyan-200 font-semibold">Never Share Personal Info:</span> Legitimate organizations won't ask for passwords or OTPs via email/SMS.</li>
+              <li><span className="text-cyan-200 font-semibold">Use Official Channels:</span> Always log in through official websites or apps, not through email links.</li>
+            </ul>
+            <h3 className="text-xl font-semibold text-cyan-300 mb-2">If You Think You've Been Phished</h3>
+            <ol className="list-decimal list-inside text-gray-200 space-y-1">
+              <li>Don't panic. Change your passwords immediately for affected accounts.</li>
+              <li>Contact your bank if financial information was shared.</li>
+              <li>Report the incident to <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" className="underline text-cyan-400">cybercrime.gov.in</a> or call <span className="font-bold">1930</span>.</li>
+              <li>Monitor your accounts for any suspicious activity.</li>
+            </ol>
+          </div>
+        </section>
+
+        {/* Cyber Crime Victim Info Box */}
+        <section className="mb-10">
+          <div className="bg-[#101928] border border-cyan-800/60 rounded-2xl p-6 shadow-lg">
+            <div className="flex items-center mb-3">
+              <span className="mr-2 text-yellow-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" /></svg>
+              </span>
+              <h2 className="text-xl md:text-2xl font-bold text-white" style={{textShadow:'0 0 6px #00fff7'}}>If You're a Victim of Cyber Crime</h2>
+            </div>
+            <p className="text-gray-200 mb-6">Don't be embarrassed or scared to report cyber crimes. <span className="text-cyan-300 font-semibold">Quick action can help prevent further damage.</span></p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white/95 rounded-lg p-5 flex flex-col justify-between shadow border-2 border-cyan-700/20">
+                <span className="block text-lg font-bold text-black mb-1">National Cyber Crime Helpline</span>
+                <span className="block text-3xl font-extrabold text-black mb-1">1930</span>
+                <span className="block text-black text-sm">24/7 helpline for reporting cyber crimes</span>
+              </div>
+              <div className="bg-white/95 rounded-lg p-5 flex flex-col justify-between shadow border-2 border-cyan-700/20">
+                <span className="block text-lg font-bold text-black mb-1">Online Reporting</span>
+                <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" className="block text-2xl font-extrabold text-black underline mb-1">cybercrime.gov.in</a>
+                <span className="block text-black text-sm">File complaints online with evidence</span>
+              </div>
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-cyan-200 mb-2" style={{textShadow:'0 0 6px #00fff7'}}>Phishing Detection Quiz</h1>
-          <p className="text-gray-300">Test your ability to spot fake emails and websites</p>
-        </div>
+        </section>
 
         {/* Progress */}
         <div className="mb-8">

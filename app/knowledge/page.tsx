@@ -159,7 +159,17 @@ export default function KnowledgeHubPage() {
                         ))}
                       </ul>
                     </div>
-                    <Link href={`/knowledge/fraud/${fraud.id}`}>
+                    <Link href={
+                      fraud.id === "otp-scams"
+                        ? "/learn/otp-phone-scam"
+                        : fraud.id === "upi-scams"
+                        ? "/learn/payment-security"
+                        : fraud.id === "identity-theft"
+                        ? "/learn/identity-protection"
+                        : fraud.id === "phishing"
+                        ? "/knowledge/fraud/phishing"
+                        : `/knowledge/fraud/${fraud.id}`
+                    }>
                       <Button variant="outline" className="w-full bg-transparent group border-cyan-400 text-cyan-400 hover:bg-cyan-900/20 hover:text-fuchsia-400">
                         Learn More
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -178,6 +188,14 @@ export default function KnowledgeHubPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {demographics.map((demo) => {
               const Icon = demo.icon
+              // Map demographic id to correct folder name for routing
+              let route = `/knowledge/${demo.id}`
+              if (demo.id === "professional") route = "/knowledge/professionals"
+              if (demo.id === "homemaker") route = "/knowledge/homemakers"
+              if (demo.id === "rural") route = "/knowledge/rural-users"
+              if (demo.id === "senior") route = "/knowledge/seniors"
+              if (demo.id === "general") route = "/knowledge/general-public"
+              // student remains /knowledge/student
               return (
                 <Card key={demo.id} className="hover:shadow-lg transition-shadow duration-300 bg-gray-900/60 border border-cyan-400/10">
                   <CardHeader className="text-center">
@@ -190,7 +208,7 @@ export default function KnowledgeHubPage() {
                   </CardHeader>
                   <CardContent className="text-center">
                     <CardDescription className="mb-6 text-sm leading-relaxed text-gray-300">{demo.description}</CardDescription>
-                    <Link href={`/knowledge/${demo.id}`}>
+                    <Link href={route}>
                       <Button variant="outline" className="w-full bg-transparent group border-cyan-400 text-cyan-400 hover:bg-cyan-900/20 hover:text-fuchsia-400">
                         View Content
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

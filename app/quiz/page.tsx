@@ -439,30 +439,6 @@ export default function QuizPage() {
           </TabsContent>
         </Tabs>
 
-        <div className="mt-16 text-center">
-          <Card className="glass-effect border-2 border-cyan-200 max-w-3xl mx-auto animate-fade-in">
-            <CardContent className="pt-8">
-              <h3 className="text-2xl font-bold text-cyan-200 mb-4" style={{ textShadow: '0 0 6px #00fff7' }}>Ready to Level Up?</h3>
-              <p className="text-cyan-100 mb-6 text-lg" style={{ textShadow: '0 0 6px #00fff7' }}>
-                Based on your progress, we recommend starting with the Payment Security Quiz to earn your next badge!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/quiz/payment-security" passHref legacyBehavior>
-                  <a className="bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-8 py-3 rounded flex items-center justify-center font-semibold transition-colors duration-200 cursor-pointer">
-                    <Star className="h-5 w-5 mr-2" />
-                    Recommended Quiz
-                  </a>
-                </Link>
-                <Link href="/study" passHref legacyBehavior>
-                  <a className="bg-orange-600 hover:bg-orange-700 text-white text-lg px-8 py-3 rounded flex items-center justify-center font-semibold transition-colors duration-200 cursor-pointer">
-                    <BookOpen className="h-5 w-5 mr-2" />
-                    Study Modules
-                  </a>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </main>
     </div>
   )
