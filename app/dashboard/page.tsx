@@ -37,6 +37,7 @@ interface UserProgress {
   lastActive: string
 }
 
+  import ProtectedRoute from "@/components/ProtectedRoute"
 interface ModuleProgress {
   id: string
   title: string

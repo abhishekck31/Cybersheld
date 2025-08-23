@@ -4,12 +4,12 @@ import DemographicCards from "@/components/demographic-cards"
 import { QuickActions } from "@/components/quick-actions"
 import { StatsSection } from "@/components/stats-section"
 import { FooterSection } from "@/components/footer-section"
-// import ProtectedRoute from "@/components/ProtectedRoute"
+import ProtectedRoute from "@/components/ProtectedRoute"
 
 export default function HomePage() {
   return (
-    // <ProtectedRoute>
-      <div className="min-h-screen bg-black text-gray-100">
+    <ProtectedRoute>
+  <div className="min-h-screen bg-black text-gray-100">
         <Navigation />
         <main>
           <HeroSection />
@@ -29,6 +29,6 @@ export default function HomePage() {
         </main>
         <FooterSection />
       </div>
-    // </ProtectedRoute>
+    </ProtectedRoute>
   )
 }

@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-// import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import {
   Menu,
   Shield,
@@ -90,7 +90,7 @@ export function Navigation() {
           </div>
 
           <div className="flex items-center space-x-3">
-            {/* <SignedOut>
+            <SignedOut>
               <SignInButton mode="modal">
                 <Button
                   variant="outline"
@@ -111,16 +111,7 @@ export function Navigation() {
                   },
                 }}
               />
-            </SignedIn> */}
-            
-            {/* Placeholder for authentication - commented out */}
-            <Button
-              variant="outline"
-              className="border-cyan-400 text-cyan-300 hover:bg-cyan-700 hover:text-black flex items-center space-x-2 bg-transparent shadow-cyan-400/20"
-            >
-              <LogIn className="h-4 w-4" />
-              <span>Demo Mode</span>
-            </Button>
+            </SignedIn>
           </div>
 
           <Button
@@ -134,7 +125,7 @@ export function Navigation() {
 
         <div className="md:hidden flex items-center space-x-3">
           <LanguageSwitcher />
-          {/* <SignedOut>
+          <SignedOut>
             <SignInButton mode="modal">
               <Button variant="ghost" size="icon" className="text-cyan-300 hover:text-fuchsia-400">
                 <LogIn className="h-5 w-5" />
@@ -149,13 +140,7 @@ export function Navigation() {
                 },
               }}
             />
-          </SignedIn> */}
-          
-          {/* Placeholder for mobile authentication - commented out */}
-          <Button variant="ghost" size="icon" className="text-cyan-300 hover:text-fuchsia-400">
-            <LogIn className="h-5 w-5" />
-          </Button>
-          
+          </SignedIn>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="text-cyan-300 hover:text-fuchsia-400">
@@ -174,20 +159,14 @@ export function Navigation() {
                   </div>
                 </div>
 
-                {/* <SignedOut>
+                <SignedOut>
                   <SignInButton mode="modal">
                     <Button className="w-full bg-cyan-700 hover:bg-fuchsia-700 text-white flex items-center justify-center space-x-2 py-3 border-2 border-cyan-400/60">
                       <LogIn className="h-5 w-5" />
                       <span>Sign In</span>
                     </Button>
                   </SignInButton>
-                </SignedOut> */}
-                
-                {/* Placeholder for mobile sign in - commented out */}
-                <Button className="w-full bg-cyan-700 hover:bg-fuchsia-700 text-white flex items-center justify-center space-x-2 py-3 border-2 border-cyan-400/60">
-                  <LogIn className="h-5 w-5" />
-                  <span>Demo Mode</span>
-                </Button>
+                </SignedOut>
 
                 {navItems.map((item, index) => {
                   const Icon = item.icon

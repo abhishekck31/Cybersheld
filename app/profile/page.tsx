@@ -1,49 +1,31 @@
-// import { UserProfile } from "@clerk/nextjs"
-// import { dark } from "@clerk/themes"
-import { Navigation } from "@/components/navigation"
-import { FooterSection } from "@/components/footer-section"
+import { UserProfile } from "@clerk/nextjs"
+import { dark } from "@clerk/themes"
+import ProtectedRoute from "@/components/ProtectedRoute"
 
 export default function ProfilePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <main className="container mx-auto max-w-4xl px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Profile</h1>
-          <p className="text-muted-foreground">Authentication disabled - Demo Mode</p>
-        </div>
-        
-        {/* <UserProfile
-          appearance={{
-            baseTheme: dark,
-            variables: {
-              colorPrimary: "#0891b2",
-              colorBackground: "#111827",
-              colorInputBackground: "#1f2937",
-              colorInputText: "#f9fafb",
-            },
-          }}
-        /> */}
-        
-        <div className="bg-card border rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-semibold mb-4">Demo Profile</h2>
-          <p className="text-muted-foreground mb-6">
-            This is a demo version of CyberShield India. Authentication has been disabled for demonstration purposes.
-          </p>
-          <div className="bg-muted rounded-lg p-4">
-            <p className="text-sm">
-              In the full version, users would be able to:
-            </p>
-            <ul className="text-sm text-muted-foreground mt-2 space-y-1">
-              <li>• Sign in with email or social accounts</li>
-              <li>• Manage their profile information</li>
-              <li>• Track learning progress</li>
-              <li>• Save bookmarks and preferences</li>
-            </ul>
+    <ProtectedRoute>
+  <div className="min-h-screen bg-black py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">User Profile</h1>
+            <p className="text-gray-400">Manage your account settings and preferences</p>
+          </div>
+          <div className="bg-[#18181b] rounded-lg p-6">
+            <UserProfile
+              appearance={{
+                baseTheme: dark,
+                variables: {
+                  colorPrimary: "#0891b2",
+                  colorBackground: "#1f2937",
+                  colorInputBackground: "#374151",
+                  colorInputText: "#f9fafb",
+                },
+              }}
+            />
           </div>
         </div>
-      </main>
-      <FooterSection />
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }
