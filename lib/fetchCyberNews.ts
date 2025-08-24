@@ -95,8 +95,9 @@ export async function fetchCyberNews(): Promise<NewsArticle[]> {
       .slice(0, 10);
   }
 
-  // If we still have fewer than 3 items, append small curated fallback items so the UI has content
-  if (uniqueResults.length < 3) {
+  // If we have no results from external sources, append small curated fallback items so the UI has content
+  // This avoids mixing sample/fallback items with genuine API results and prevents duplicate sample news.
+  if (uniqueResults.length === 0) {
     const now = new Date();
     const fallback = [
       {
